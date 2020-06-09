@@ -47,7 +47,7 @@ Also, register the Facade like so:
 ```php
 'aliases' => [
     ...
-    'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
+    'Cloudinary' => Unicodeveloper\Cloudinary\Facades\Cloudinary::class,
     ...
 ]
 ```
@@ -57,7 +57,7 @@ Also, register the Facade like so:
 You can publish the configuration file using this command:
 
 ```bash
-php artisan vendor:publish --provider="Unicodeveloper\Paystack\PaystackServiceProvider"
+php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider"
 ```
 
 A configuration-file named `paystack.php` with some sensible defaults will be placed in your `config` directory:
