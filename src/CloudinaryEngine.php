@@ -69,7 +69,7 @@ class CloudinaryEngine
      */
     public function setCloudinaryConfig()
     {
-        $config = config('cloudinary');
+        $config = config('cloudinary.account_details');
         $this->cloudinaryConfig = $config;
     }
 
@@ -157,6 +157,18 @@ class CloudinaryEngine
     public function unsignedUploadAsync($file, $uploadPreset, $options = [])
     {
         return $this->cloudinary->uploadApi()->unsignedUploadAsync($file, $uploadPreset, $options);
+    }
+
+    /**
+    * Uploads an asset to a Cloudinary account, not limited to images, but any type of file.
+    */
+    public function uploadFiles($file, $options = [])
+    {
+        $uploadOptions = array_merge($options, ['resource_type' => 'auto']);
+
+        $this->response = $this->cloudinary->uploadApi()->upload($file, $uploadOptions);
+
+        return $this;
     }
 
     public function uploadVideo($file, $options = [])
