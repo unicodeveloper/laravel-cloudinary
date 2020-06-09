@@ -4,6 +4,7 @@ namespace Unicodeveloper\Cloudinary;
 
 use Illuminate\Support\ServiceProvider;
 use Unicodeveloper\Cloudinary\Commands\BackupFilesCommand;
+use Unicodeveloper\Cloudinary\Commands\UploadFileCommand;
 
 class CloudinaryServiceProvider extends ServiceProvider
 {
@@ -41,7 +42,8 @@ class CloudinaryServiceProvider extends ServiceProvider
         */
         if ($this->app->runningInConsole()) {
             $this->commands([
-                BackupFilesCommand::class
+                BackupFilesCommand::class,
+                UploadFileCommand::class
             ]);
         }
     }
