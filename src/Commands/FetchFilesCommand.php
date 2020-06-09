@@ -13,16 +13,14 @@ class FetchFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = "cloudinary:backup
-        {--location= : The name of the folder in your app's storage/app directory}
-        {--folder= : The name of the folder where all the backed up files will be stored on Cloudinary}";
+    protected $signature = "cloudinary:fetch {publicId}";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Back up all your existing assets to Cloudinary';
+    protected $description = "Fetch an asset's URL from Cloudinary";
 
     /**
      * Execute the console command.
@@ -32,15 +30,6 @@ class FetchFilesCommand extends Command
     public function handle(CloudinaryEngine $engine)
     {
 
-        $files = $this->getFiles();
-        $folder = null;
-
-        if(! $files) {
-            $this->warn('There are no files in the storage/app/public directory. Use --location flag to specify the name of the directory (if there are files in there) within the storage/app directory.');
-
-            return;
-        }
-
         if(! config('cloudinary.account_details.account.cloud_name') ||
             ! config('cloudinary.account_details.account.api_key')   ||
             ! config('cloudinary.account_details.account.api_secret')) {
@@ -49,31 +38,22 @@ class FetchFilesCommand extends Command
             return;
         }
 
-        if ($this->option('folder') && is_string($this->option('folder'))) {
-            $folder = $this->option('folder');
+        $publicId = $this->argument('publicId');
+
+        if (! is_string($publicId)) {
+           $this->warn("Please ensure a valid public Id is passed as an argument.");
+
+           return;
         }
 
-        if ($this->option('location') && is_string($this->option('location'))) {
-            $files = $this->getFiles($this->option('location'));
-        }
-
-        $this->info('Starting backup to Cloudinary...');
+        $this->info("Fetching file...");
 
         try {
 
-            foreach($files as $file) {
-                $engine->uploadFiles($file->getRealPath(), $folder ? ['folder' => $folder] : []);
-                $this->info('Uploading in progress...');
-            }
-
-            $this->info('Backup to Cloudinary completed!');
+            $url = $engine->getImage($publicId)->toUrl();
+            $this->info("File: {$url}");
         } catch (Exception $exception) {
-            $this->warn("Backup of files to Cloudinary failed because: {$exception->getMessage()}.");
+            $this->warn("Renaming of file on Cloudinary failed because: {$exception->getMessage()}.");
         }
-    }
-
-    public function getFiles($location = 'public')
-    {
-        return File::allFiles(storage_path("app/{$location}"));
     }
 }
