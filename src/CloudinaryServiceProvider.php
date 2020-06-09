@@ -5,6 +5,10 @@ namespace Unicodeveloper\Cloudinary;
 use Illuminate\Support\ServiceProvider;
 use Unicodeveloper\Cloudinary\Commands\BackupFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\UploadFileCommand;
+use Unicodeveloper\Cloudinary\Commands\FetchFilesCommand;
+use Unicodeveloper\Cloudinary\Commands\RenameFilesCommand;
+use Unicodeveloper\Cloudinary\Commands\DeleteFilesCommand;
+use Unicodeveloper\Cloudinary\Commands\GenerateArchiveCommand;
 
 class CloudinaryServiceProvider extends ServiceProvider
 {
@@ -43,7 +47,11 @@ class CloudinaryServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 BackupFilesCommand::class,
-                UploadFileCommand::class
+                UploadFileCommand::class,
+                FetchFilesCommand::class,
+                RenameFilesCommand::class,
+                GenerateArchiveCommand::class,
+                DeleteFilesCommand::class
             ]);
         }
     }
