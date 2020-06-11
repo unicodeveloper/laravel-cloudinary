@@ -9,6 +9,7 @@ use Unicodeveloper\Cloudinary\Commands\FetchFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\RenameFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\DeleteFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\GenerateArchiveCommand;
+use Unicodeveloper\Cloudinary\Commands\GenerateZipCommand;
 
 class CloudinaryServiceProvider extends ServiceProvider
 {
@@ -51,6 +52,7 @@ class CloudinaryServiceProvider extends ServiceProvider
                 FetchFilesCommand::class,
                 RenameFilesCommand::class,
                 GenerateArchiveCommand::class,
+                GenerateZipCommand::class,
                 DeleteFilesCommand::class
             ]);
         }

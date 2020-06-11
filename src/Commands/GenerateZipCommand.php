@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
-class GenerateArchiveCommand extends Command
+class GenerateZipCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = "cloudinary:archive {remote-url}";
+    protected $signature = "cloudinary:zip {remote-url}";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create an archive on Cloudinary';
+    protected $description = 'Zip files on Cloudinary';
 
     /**
      * Execute the console command.
