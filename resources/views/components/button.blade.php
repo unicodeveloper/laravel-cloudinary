@@ -11,11 +11,15 @@
             (error, result) => {
               if (!error && result && result.event === "success") {
                 console.log('Done uploading..: ', result.info);
-                // this.url = result.info.url;
+                document.getElementById("showImg").src = result.info.url;
               }
         }).open();
     }
 </script>
+
+<div>
+    <img src="" id="showImg" width="350" height="350" />
+</div>
 
 <button type="button" onclick="openWidget()">
   {{ $slot }}
