@@ -2,6 +2,7 @@
 
 namespace Unicodeveloper\Cloudinary;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Unicodeveloper\Cloudinary\Commands\BackupFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\UploadFileCommand;
@@ -20,8 +21,9 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->bootDirectives();
-        // $this->bootComponents();
+        $this->bootResources();
+        $this->bootDirectives();
+        $this->bootComponents();
         $this->bootCommands();
         $this->bootPublishing();
     }
@@ -75,13 +77,25 @@ class CloudinaryServiceProvider extends ServiceProvider
     }
 
     /**
+     * Boot the package resources.
+     *
+     * @return void
+     */
+    protected function bootResources()
+    {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'cloudinary');
+    }
+
+    /**
      * Boot the package directives.
      *
      * @return void
      */
     protected function bootDirectives()
     {
-
+        Blade::directive('cloudinaryJS', function() {
+            return "<?php echo view('cloudinary::js'); ?>";
+        });
     }
 
     /**
@@ -91,6 +105,6 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     protected function bootComponents()
     {
-
+        Blade::component('cloudinary::components.button', 'upload-button');
     }
 }
