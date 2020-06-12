@@ -162,7 +162,7 @@ class CloudinaryEngine
     /**
     * Uploads an asset to a Cloudinary account, not limited to images, but any type of file.
     */
-    public function uploadFiles($file, $options = [])
+    public function uploadFile($file, $options = [])
     {
         $uploadOptions = array_merge($options, ['resource_type' => 'auto']);
 

@@ -2,6 +2,8 @@
 
 namespace Unicodeveloper\Cloudinary;
 
+use Illuminate\Support\Facades\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Unicodeveloper\Cloudinary\Commands\BackupFilesCommand;
@@ -21,6 +23,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->bootMacros();
         $this->bootResources();
         $this->bootDirectives();
         $this->bootComponents();
@@ -106,5 +109,19 @@ class CloudinaryServiceProvider extends ServiceProvider
     protected function bootComponents()
     {
         Blade::component('cloudinary::components.button', 'upload-button');
+    }
+
+    /**
+     * Boot the package macros that extends Laravel Uploaded File API.
+     *
+     * @return void
+     */
+    protected function bootMacros()
+    {
+        $engine = new CloudinaryEngine;
+
+        UploadedFile::macro('storeOnCloudinary', function ($folder = null) use ($engine) {
+            return $engine->uploadFile($this->getRealPath())->getSecurePath();
+        });
     }
 }

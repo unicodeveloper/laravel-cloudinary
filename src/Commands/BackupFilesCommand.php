@@ -62,7 +62,7 @@ class BackupFilesCommand extends Command
         try {
 
             foreach($files as $file) {
-                $engine->uploadFiles($file->getRealPath(), $folder ? ['folder' => $folder] : []);
+                $engine->uploadFile($file->getRealPath(), $folder ? ['folder' => $folder] : []);
                 $this->info('Uploading in progress...');
             }
 
