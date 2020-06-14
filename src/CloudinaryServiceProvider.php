@@ -25,6 +25,7 @@ class CloudinaryServiceProvider extends ServiceProvider
     {
         $this->bootMacros();
         $this->bootResources();
+        $this->bootMigrations();
         $this->bootDirectives();
         $this->bootComponents();
         $this->bootCommands();
@@ -42,6 +43,8 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->app->singleton(CloudinaryEngine::class, function ($app) {
             return new CloudinaryEngine;
         });
+
+        //$this->app->alias('cloudinary.engine', CloudinaryEngine::class);
     }
 
 
@@ -90,6 +93,20 @@ class CloudinaryServiceProvider extends ServiceProvider
     }
 
     /**
+     * Boot the package migrations.
+     *
+     * @return void
+     */
+    protected function bootMigrations()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        }
+    }
+
+
+
+    /**
      * Boot the package directives.
      *
      * @return void
@@ -121,7 +138,11 @@ class CloudinaryServiceProvider extends ServiceProvider
         $engine = new CloudinaryEngine;
 
         UploadedFile::macro('storeOnCloudinary', function ($folder = null) use ($engine) {
-            return $engine->uploadFile($this->getRealPath())->getSecurePath();
+            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder])->getSecurePath();
+        });
+
+        UploadedFile::macro('storeOnCloudinaryAs', function ($folder = null, $publicId = null) use ($engine) {
+            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder, 'public_id' => $publicId])->getSecurePath();
         });
     }
 }
