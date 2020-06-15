@@ -125,6 +125,54 @@ $page = Page::find(2);
 $page->detachMedia($file)  // Example of $file is $request->file('file');
 ```
 
+**Upload Files Via An Upload Widget**:
+
+Use the `x-upload-button` Blade component that ships with this Package like so:
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        ...
+        @cloudinaryJS
+    </head>
+    <body>
+        <x-upload-button>
+            Upload Files
+        </x-upload-button>
+    </body>
+</html>
+````
+
+**Media Management via The Command Line**:
+
+```bash
+/**
+*  Back up Files on Cloudinary
+*/
+php artisan cloudinary:backup
+
+/**
+ *  Delete a File on Cloudinary
+ */
+php artisan cloudinary:delete
+
+/**
+ * Fetch a File from Cloudinary
+ */
+php artisan cloudinary:fetch
+
+/**
+ * Rename a File from Cloudinary
+ */
+php artisan cloudinary:rename
+
+/**
+ * Upload a File to Cloudinary
+ */
+php artisancloudinary:upload
+```
+
+
 ## Installation
 
 [PHP](https://php.net) 7.0+, and [Composer](https://getcomposer.org) are required.
@@ -231,6 +279,20 @@ CLOUDINARY_NOTIFICATION_URL=
 
 *If you are using a hosting service like heroku,forge,digital ocean, etc, please ensure to add the above details to your configuration variables.*
 
+### Cloudinary JS
+
+Cloudinary relies on its own JavaScript library to initiate the Cloudinary Upload Widget. You can load the JavaScript library by placing the @cloudinaryJS directive right before your application layout's closing </head> tag:
+
+```html
+<head>
+    ...
+
+    @cloudinaryJS
+</head>
+```
+
+***Note:** ONLY LOAD THIS IF YOU HAVE DECIDED TO USE THE UPLOAD WIDGET. IF YOU ARE USING THIS PACKAGE FOR A LARAVEL API BACKEND, YOU DON'T NEED TO DO THIS!*
+```
 
 ## How can I thank you?
 
