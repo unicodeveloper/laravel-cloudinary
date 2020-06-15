@@ -17,12 +17,12 @@
     </a>
 </p>
 
-> A Laravel Package for uploading, optimizing, transforming and delivering media files with Cloudinary. It provides a fluent and expressive API to easily attach your media files to Eloquent models.
+> A Laravel Package for uploading, optimizing, transforming and delivering media files with Cloudinary. Furthermore, it provides a fluent and expressive API to easily attach your media files to Eloquent models.
 
 
 ## Usage
 
-Upload a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**:
+**Upload** a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**:
 
 ```php
 
