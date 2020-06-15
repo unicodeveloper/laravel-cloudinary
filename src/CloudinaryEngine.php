@@ -130,7 +130,7 @@ class CloudinaryEngine
     */
     public function upload($file, $options = [])
     {
-        $this->response = $this->cloudinary->uploadApi()->upload($file, $options);
+        $this->response = $this->uploadApi()->upload($file, $options);
 
         return $this;
     }
@@ -149,7 +149,7 @@ class CloudinaryEngine
     */
     public function uploadAsync($file, $options = [])
     {
-        return $this->cloudinary->uploadApi()->uploadAsync($file, $options);
+        return $this->uploadApi()->uploadAsync($file, $options);
     }
 
     /**
@@ -169,7 +169,7 @@ class CloudinaryEngine
     */
     public function unsignedUpload($file, $uploadPreset, $options = [])
     {
-        $this->response = $this->cloudinary->uploadApi()->unsignedUpload($file, $uploadPreset, $options);
+        $this->response = $this->uploadApi()->unsignedUpload($file, $uploadPreset, $options);
 
         return $this;
     }
@@ -183,12 +183,7 @@ class CloudinaryEngine
     */
     public function unsignedUploadAsync($file, $uploadPreset, $options = [])
     {
-        return $this->cloudinary->uploadApi()->unsignedUploadAsync($file, $uploadPreset, $options);
-    }
-
-    public function uploadApi()
-    {
-        return $this->cloudinary->uploadApi();
+        return $this->uploadApi()->unsignedUploadAsync($file, $uploadPreset, $options);
     }
 
     /**
@@ -198,7 +193,7 @@ class CloudinaryEngine
     {
         $uploadOptions = array_merge($options, ['resource_type' => 'auto']);
 
-        $this->response = $this->cloudinary->uploadApi()->upload($file, $uploadOptions);
+        $this->response = $this->uploadApi()->upload($file, $uploadOptions);
 
         return $this;
     }
@@ -207,7 +202,7 @@ class CloudinaryEngine
     {
         $videoUploadOptions = array_merge($options, ['resource_type' => 'video']);
 
-        $this->response = $this->cloudinary->uploadApi()->upload($file, $videoUploadOptions);
+        $this->response = $this->uploadApi()->upload($file, $videoUploadOptions);
 
         return $this;
     }
@@ -412,7 +407,7 @@ class CloudinaryEngine
     */
     public function addTag($tag, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->addTag($tag, $publicIds, $options);
+        return $this->uploadApi()->addTag($tag, $publicIds, $options);
     }
 
     /**
@@ -422,7 +417,7 @@ class CloudinaryEngine
     */
     public function addTagAsync($tag, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->addTagAsync($tag, $publicIds, $options);
+        return $this->uploadApi()->addTagAsync($tag, $publicIds, $options);
     }
 
     /**
@@ -438,7 +433,7 @@ class CloudinaryEngine
      */
     public function removeTag($tag, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->removeTag($tag, $publicIds, $options);
+        return $this->uploadApi()->removeTag($tag, $publicIds, $options);
     }
 
     /**
@@ -449,7 +444,7 @@ class CloudinaryEngine
      */
     public function removeTagAsync($tag, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->removeTagAsync($tag, $publicIds, $options);
+        return $this->uploadApi()->removeTagAsync($tag, $publicIds, $options);
     }
 
     /**
@@ -464,7 +459,7 @@ class CloudinaryEngine
     */
     public function removeAllTags($publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->removeAllTags($publicIds, $options);
+        return $this->uploadApi()->removeAllTags($publicIds, $options);
     }
 
     /**
@@ -475,7 +470,7 @@ class CloudinaryEngine
      */
     public function removeAllTagsAsync($publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->removeAllTagsAsync($publicIds, $options);
+        return $this->uploadApi()->removeAllTagsAsync($publicIds, $options);
     }
 
     /**
@@ -491,7 +486,7 @@ class CloudinaryEngine
     */
     public function replaceTag($tag, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->replaceTag($tag, $publicIds, $options);
+        return $this->uploadApi()->replaceTag($tag, $publicIds, $options);
     }
 
     /**
@@ -502,7 +497,7 @@ class CloudinaryEngine
     */
     public function replaceTagAsync($tag, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->replaceTagAsync($tag, $publicIds, $options);
+        return $this->uploadApi()->replaceTagAsync($tag, $publicIds, $options);
     }
 
     /*
@@ -527,7 +522,7 @@ class CloudinaryEngine
     */
     public function generateSprite($tag, $options = [])
     {
-        return $this->cloudinary->uploadApi()->generateSprite($tag, $options);
+        return $this->uploadApi()->generateSprite($tag, $options);
     }
 
     /**
@@ -537,7 +532,7 @@ class CloudinaryEngine
     */
     public function generateSpriteAsync($tag, $options = [])
     {
-        return $this->cloudinary->uploadApi()->generateSpriteAsync($tag, $options);
+        return $this->uploadApi()->generateSpriteAsync($tag, $options);
     }
 
     /**
@@ -554,97 +549,97 @@ class CloudinaryEngine
     {
         $pdfOptions = array_merge($options, ['async' => false, 'format' => 'pdf']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $pdfOptions);
+        return $this->uploadApi()->multi($tag, $pdfOptions);
     }
 
     public function generatePDFAsync($tag, $options = [])
     {
         $pdfOptions = array_merge($options, ['async' => true, 'format' => 'pdf']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $pdfOptions);
+        return $this->uploadApi()->multi($tag, $pdfOptions);
     }
 
     public function generateAnimatedGIF($tag, $options = [])
     {
         $gifOptions = array_merge($options, ['async' => false, 'format' => 'gif']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $gifOptions);
+        return $this->uploadApi()->multi($tag, $gifOptions);
     }
 
     public function generateAnimatedPNG($tag, $options = [])
     {
         $pngOptions = array_merge($options, ['async' => false, 'format' => 'png']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $pngOptions);
+        return $this->uploadApi()->multi($tag, $pngOptions);
     }
 
     public function generateAnimatedPNGAsync($tag, $options = [])
     {
         $pngOptions = array_merge($options, ['async' => true, 'format' => 'png']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $pngOptions);
+        return $this->uploadApi()->multi($tag, $pngOptions);
     }
 
     public function generateAnimatedWEBP($tag, $options = [])
     {
         $webpOptions = array_merge($options, ['async' => false, 'format' => 'webp']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $webpOptions);
+        return $this->uploadApi()->multi($tag, $webpOptions);
     }
 
     public function generateAnimatedWEBPAsync($tag, $options = [])
     {
         $webpOptions = array_merge($options, ['async' => true, 'format' => 'webp']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $webpOptions);
+        return $this->uploadApi()->multi($tag, $webpOptions);
     }
 
     public function generateAnimatedMP4($tag, $options = [])
     {
         $mp4Options = array_merge($options, ['async' => false, 'format' => 'mp4']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $mp4Options);
+        return $this->uploadApi()->multi($tag, $mp4Options);
     }
 
     public function generateAnimatedMP4Async($tag, $options = [])
     {
         $mp4Options = array_merge($options, ['async' => true, 'format' => 'mp4']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $mp4Options);
+        return $this->uploadApi()->multi($tag, $mp4Options);
     }
 
     public function generateAnimatedWEBM($tag, $options = [])
     {
         $webmOptions = array_merge($options, ['async' => false, 'format' => 'webm']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $webmOptions);
+        return $this->uploadApi()->multi($tag, $webmOptions);
     }
 
     public function generateAnimatedWEBMAsync($tag, $options = [])
     {
         $webmOptions = array_merge($options, ['async' => true, 'format' => 'webm']);
 
-        return $this->cloudinary->uploadApi()->multi($tag, $webmOptions);
+        return $this->uploadApi()->multi($tag, $webmOptions);
     }
 
     public function multi($tag, $options = [])
     {
-        return $this->cloudinary->uploadApi()->multi($tag, $options);
+        return $this->uploadApi()->multi($tag, $options);
     }
 
     public function multiAsync($tag, $options = [])
     {
-        return $this->cloudinary->uploadApi()->multiAsync($tag, $options);
+        return $this->uploadApi()->multiAsync($tag, $options);
     }
 
     public function explode($publicId, $options = [])
     {
-        return $this->cloudinary->uploadApi()->explode($publicId, $options);
+        return $this->uploadApi()->explode($publicId, $options);
     }
 
     public function explodeAsync($publicId, $options = [])
     {
-        return $this->cloudinary->uploadApi()->explodeAsync($publicId, $options);
+        return $this->uploadApi()->explodeAsync($publicId, $options);
     }
 
     /**
@@ -659,14 +654,14 @@ class CloudinaryEngine
     */
     public function generateImageFromText($text, $options = [])
     {
-        $this->response = $this->cloudinary->uploadApi()->text($text, $options);
+        $this->response = $this->uploadApi()->text($text, $options);
 
         return $this;
     }
 
     public function generateImageFromTextAsync($text, $options = [])
     {
-        return $this->cloudinary->uploadApi()->textAsync($text, $options);
+        return $this->uploadApi()->textAsync($text, $options);
     }
 
     /*
@@ -676,32 +671,32 @@ class CloudinaryEngine
     */
     public function createArchive($options = [], $targetFormat = null)
     {
-        return $this->cloudinary->uploadApi()->createArchive($options, $targetFormat);
+        return $this->uploadApi()->createArchive($options, $targetFormat);
     }
 
     public function createArchiveAsync($options = [], $targetFormat = null)
     {
-        return $this->cloudinary->uploadApi()->createArchiveAsync($options, $targetFormat);
+        return $this->uploadApi()->createArchiveAsync($options, $targetFormat);
     }
 
     public function createZip($options = [])
     {
-        return $this->cloudinary->uploadApi()->createZip($options);
+        return $this->uploadApi()->createZip($options);
     }
 
     public function createZipAsync($options = [])
     {
-        return $this->cloudinary->uploadApi()->createZipAsync($options);
+        return $this->uploadApi()->createZipAsync($options);
     }
 
     public function downloadZipUrl($options = [])
     {
-        return $this->cloudinary->uploadApi()->downloadZipUrl($options);
+        return $this->uploadApi()->downloadZipUrl($options);
     }
 
     public function downloadArchiveUrl($options = [])
     {
-        return $this->cloudinary->uploadApi()->downloadArchiveUrl($options);
+        return $this->uploadApi()->downloadArchiveUrl($options);
     }
 
     /*
@@ -711,22 +706,22 @@ class CloudinaryEngine
     */
     public function addContext($context, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->addContext($context, $publicIds, $options);
+        return $this->uploadApi()->addContext($context, $publicIds, $options);
     }
 
     public function addContextAsync($context, $publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->addContextAsync($context, $publicIds, $options);
+        return $this->uploadApi()->addContextAsync($context, $publicIds, $options);
     }
 
     public function removeAllContext($publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->removeAllContext($publicIds, $options);
+        return $this->uploadApi()->removeAllContext($publicIds, $options);
     }
 
     public function removeAllContextAsync($publicIds = [], $options = [])
     {
-        return $this->cloudinary->uploadApi()->removeAllContextAsync($publicIds, $options);
+        return $this->uploadApi()->removeAllContextAsync($publicIds, $options);
     }
 
     /*
@@ -736,31 +731,31 @@ class CloudinaryEngine
     */
     public function destroy($publicId, $options = [])
     {
-        return $this->cloudinary->uploadApi()->destroy($publicId, $options);
+        return $this->uploadApi()->destroy($publicId, $options);
     }
 
     public function destroyAsync($publicId, $options = [])
     {
-       return $this->cloudinary->uploadApi()->destroyAsync($publicId, $options);
+       return $this->uploadApi()->destroyAsync($publicId, $options);
     }
 
     public function rename($from, $to, $options = [])
     {
-       return $this->cloudinary->uploadApi()->rename($from, $to, $options);
+       return $this->uploadApi()->rename($from, $to, $options);
     }
 
     public function renameAsync($from, $to, $options = [])
     {
-       return $this->cloudinary->uploadApi()->renameAsync($from, $to, $options);
+       return $this->uploadApi()->renameAsync($from, $to, $options);
     }
 
     public function explicit($publicId, $options = [])
     {
-       return $this->cloudinary->uploadApi()->explicit($publicId, $options);
+       return $this->uploadApi()->explicit($publicId, $options);
     }
 
     public function explicitAsync($publicId, $options = [])
     {
-       return $this->cloudinary->uploadApi()->explicitAsync($publicId, $options);
+       return $this->uploadApi()->explicitAsync($publicId, $options);
     }
 }
