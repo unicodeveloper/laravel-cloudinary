@@ -216,6 +216,7 @@ return [
 ];
 ```
 
+### API Keys
 Open your .env file and add your Cloudinary cloud name, api key, api secret, and upload preset like so:
 
 ```php
