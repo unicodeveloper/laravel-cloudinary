@@ -1,6 +1,7 @@
 <p align="center">
-    <img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_86/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.png">
-    Laravel Cloudinary
+    <!-- <img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_86/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.png"> -->
+    <h3> Laravel Cloudinary </h3>
+    <p>Laravel-Cloudinary is a package for easily uploading, optimizing, transforming and attaching media files to Eloquent models with Laravel.</p>
 </p>
 
 <p align="center">
@@ -18,9 +19,6 @@
     </a>
 </p>
 
-
-> A Laravel Package for working with Cloudinary seamlessly
-
 ## Installation
 
 [PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
@@ -34,26 +32,25 @@ composer require unicodeveloper/laravel-cloudinary
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"unicodeveloper/laravel-cloudinary": "1.0.*"
+"unicodeveloper/laravel-cloudinary": "1.0.0-beta"
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
 
-
-Once Laravel Paystack is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
+Once Laravel Cloudinary is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
 
 ```php
 'providers' => [
     ...
-    Unicodeveloper\Paystack\PaystackServiceProvider::class,
+    Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class,
     ...
 ]
 ```
 
 > If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-cloudinary#configuration)
 
-* `Unicodeveloper\Paystack\PaystackServiceProvider::class`
+* `Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class`
 
 Also, register the Facade like so:
 
@@ -73,73 +70,63 @@ You can publish the configuration file using this command:
 php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider"
 ```
 
-A configuration-file named `paystack.php` with some sensible defaults will be placed in your `config` directory:
+A configuration-file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
 
 ```php
 <?php
-
 return [
+    'notification_url' => env('CLOUDINARY_NOTIFICATION_URL', ''),
 
-    /**
-     * Public Key From Paystack Dashboard
-     *
-     */
-    'publicKey' => getenv('PAYSTACK_PUBLIC_KEY'),
+    'account_details' => [
 
-    /**
-     * Secret Key From Paystack Dashboard
-     *
-     */
-    'secretKey' => getenv('PAYSTACK_SECRET_KEY'),
+        'account' => [
+            /**
+             * Cloud Name From Cloudinary Dashboard
+             *
+             */
+            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
 
-    /**
-     * Paystack Payment URL
-     *
-     */
-    'paymentUrl' => getenv('PAYSTACK_PAYMENT_URL'),
+            /**
+            * API Key From Cloudinary Dashboard
+            *
+            */
+            'api_key' => env('CLOUDINARY_API_KEY'),
 
-    /**
-     * Optional email address of the merchant
-     *
-     */
-    'merchantEmail' => getenv('MERCHANT_EMAIL'),
+            /**
+             * API Secret From Cloudinary Dashboard
+             *
+             */
+            'api_secret' => env('CLOUDINARY_API_SECRET'),
 
+            /**
+            * Upload Preset From Cloudinary Dashboard
+            *
+            */
+            'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
+        ],
+
+        'url' => [
+            'secure' => true
+        ]
+    ]
 ];
 ```
 
-
-## General payment flow
-
-Though there are multiple ways to pay an order, most payment gateways expect you to follow the following flow in your checkout process:
-
-### 1. The customer is redirected to the payment provider
-After the customer has gone through the checkout process and is ready to pay, the customer must be redirected to site of the payment provider.
-
-The redirection is accomplished by submitting a form with some hidden fields. The form must send a POST request to the site of the payment provider. The hidden fields minimally specify the amount that must be paid, the order id and a hash.
-
-The hash is calculated using the hidden form fields and a non-public secret. The hash used by the payment provider to verify if the request is valid.
-
-
-### 2. The customer pays on the site of the payment provider
-The customer arrives on the site of the payment provider and gets to choose a payment method. All steps necessary to pay the order are taken care of by the payment provider.
-
-### 3. The customer gets redirected back to your site
-After having paid the order the customer is redirected back. In the redirection request to the shop-site some values are returned. The values are usually the order id, a paymentresult and a hash.
-
-The hash is calculated out of some of the fields returned and a secret non-public value. This hash is used to verify if the request is valid and comes from the payment provider. It is paramount that this hash is thoroughly checked.
-
-
 ## Usage
 
-Open your .env file and add your public key, secret key, merchant email and payment url like so:
+Open your .env file and add your Cloudinary cloud name, api key, api secret, and upload preset like so:
 
 ```php
-PAYSTACK_PUBLIC_KEY=xxxxxxxxxxxxx
-PAYSTACK_SECRET_KEY=xxxxxxxxxxxxx
-PAYSTACK_PAYMENT_URL=https://api.paystack.co
-MERCHANT_EMAIL=unicodeveloper@gmail.com
+CLOUDINARY_CLOUD_NAME=xxxxxxxxxxxxx
+CLOUDINARY_API_KEY=xxxxxxxxxxxxx
+CLOUDINARY_API_SECRET=xxxxxxxxxxxxx
+CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
+CLOUDINARY_NOTIFICATION_URL=
 ```
-*If you are using a hosting service like heroku, ensure to add the above details to your configuration variables.*
+
+***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console)*
+
+*If you are using a hosting service like heroku,forge,digital ocean, etc, please ensure to add the above details to your configuration variables.*
 
 Set up routes and controller methods like so:
 
