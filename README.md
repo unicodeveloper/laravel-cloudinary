@@ -1,8 +1,8 @@
-<p align="center">
+<div align="center">
     <!-- <img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_86/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.png"> -->
     <h3> Laravel Cloudinary </h3>
     <p>Laravel-Cloudinary is a package for easily uploading, optimizing, transforming and attaching media files to Eloquent models with Laravel.</p>
-</p>
+</div>
 
 <p align="center">
     <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
