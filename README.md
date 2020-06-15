@@ -82,6 +82,49 @@ $result->getHeight(); // Get the height of the uploaded file
 $result->getTimeUploaded(); // Get the time the file was uploaded
 ```
 
+**Attach Files/Media** to Laravel **Eloquent Models**:
+
+```php
+/**
+ *  How to attach a file to a Model by creating
+ */
+$page = Page::create($this->request->input());
+$page->attachMedia($file);   // Example of $file is $request->file('file');
+
+/**
+ *  How to attach a file to a Model by retrieving
+ */
+$page = Page::find(2);
+$page->attachMedia($file);  // Example of $file is $request->file('file');
+
+/**
+ *  How to retrieve files that were attached to a Model
+ */
+$filesBelongingToSecondPage = Page::find(2)->fetchAllMedia();
+
+/**
+ *  How to retrieve the first file that was attached to a Model
+ */
+$fileBelongingToSecondPage = Page::find(2)->fetchFirstMedia();
+
+/**
+ *  How to retrieve the last file that was attached to a Model
+ */
+$fileBelongingToSecondPage = Page::find(2)->fetchLastMedia();
+
+/**
+ *  How to replace/update files attached to a Model
+ */
+$page = Page::find(2);
+$page->updateMedia($file);  // Example of $file is $request->file('file');
+
+/**
+*  How to detach a file from a Model
+*/
+$page = Page::find(2);
+$page->detachMedia($file)  // Example of $file is $request->file('file');
+```
+
 ## Installation
 
 [PHP](https://php.net) 7.0+, and [Composer](https://getcomposer.org) are required.
