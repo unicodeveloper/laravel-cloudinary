@@ -145,7 +145,7 @@ Use the `x-upload-button` Blade component that ships with this Package like so:
 
 **Media Management via The Command Line**:
 
-```console
+```bash
 /**
 *  Back up Files on Cloudinary
 */
