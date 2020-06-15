@@ -84,7 +84,7 @@ $result->getTimeUploaded(); // Get the time the file was uploaded
 
 ## Installation
 
-[PHP](https://php.net) 7.1+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
+[PHP](https://php.net) 7.0+, and [Composer](https://getcomposer.org) are required.
 
 To get the latest version of Laravel Cloudinary, simply require it:
 
