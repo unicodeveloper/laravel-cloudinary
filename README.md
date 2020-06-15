@@ -292,7 +292,6 @@ Cloudinary relies on its own JavaScript library to initiate the Cloudinary Uploa
 ```
 
 ***Note:** ONLY LOAD THIS IF YOU HAVE DECIDED TO USE THE UPLOAD WIDGET. IF YOU ARE USING THIS PACKAGE FOR A LARAVEL API BACKEND, YOU DON'T NEED TO DO THIS!*
-```
 
 ## How can I thank you?
 
