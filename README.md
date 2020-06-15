@@ -1,6 +1,5 @@
 <div align="center">
-    <!-- <img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_86/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.png"> -->
-    <h3> Laravel Cloudinary </h3>
+    <h2> Laravel Cloudinary </h2>
 </div>
 
 <p align="center">
@@ -18,187 +17,15 @@
     </a>
 </p>
 
-<p>Laravel-Cloudinary is a package for easily uploading, optimizing, transforming and attaching media files to Eloquent models with Laravel.</p>
+> A Laravel Package for easily uploading, optimizing, transforming and delivering media files with Cloudinary. It provides a fluent and expressive API to easily attach your media files to Eloquent models.
 
-## Installation
-
-[PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
-
-To get the latest version of Laravel Cloudinary, simply require it
-
-```bash
-composer require unicodeveloper/laravel-cloudinary
-```
-
-Or add the following line to the require block of your `composer.json` file.
-
-```
-"unicodeveloper/laravel-cloudinary": "1.0.0-beta"
-```
-
-You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
-
-
-Once Laravel Cloudinary is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
-
-```php
-'providers' => [
-    ...
-    Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class,
-    ...
-]
-```
-
-> If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-cloudinary#configuration)
-
-* `Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class`
-
-Also, register the Facade like so:
-
-```php
-'aliases' => [
-    ...
-    'Cloudinary' => Unicodeveloper\Cloudinary\Facades\Cloudinary::class,
-    ...
-]
-```
-
-## Configuration
-
-You can publish the configuration file using this command:
-
-```bash
-php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider"
-```
-
-A configuration-file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
-
-```php
-<?php
-return [
-    'notification_url' => env('CLOUDINARY_NOTIFICATION_URL', ''),
-
-    'account_details' => [
-
-        'account' => [
-            /**
-             * Cloud Name From Cloudinary Dashboard
-             *
-             */
-            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-
-            /**
-            * API Key From Cloudinary Dashboard
-            *
-            */
-            'api_key' => env('CLOUDINARY_API_KEY'),
-
-            /**
-             * API Secret From Cloudinary Dashboard
-             *
-             */
-            'api_secret' => env('CLOUDINARY_API_SECRET'),
-
-            /**
-            * Upload Preset From Cloudinary Dashboard
-            *
-            */
-            'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
-        ],
-
-        'url' => [
-            'secure' => true
-        ]
-    ]
-];
-```
 
 ## Usage
 
-Open your .env file and add your Cloudinary cloud name, api key, api secret, and upload preset like so:
+Upload a file to Cloudinary:
 
 ```php
-CLOUDINARY_CLOUD_NAME=xxxxxxxxxxxxx
-CLOUDINARY_API_KEY=xxxxxxxxxxxxx
-CLOUDINARY_API_SECRET=xxxxxxxxxxxxx
-CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
-CLOUDINARY_NOTIFICATION_URL=
-```
 
-***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console)*
-
-*If you are using a hosting service like heroku,forge,digital ocean, etc, please ensure to add the above details to your configuration variables.*
-
-Set up routes and controller methods like so:
-
-Note: Make sure you have `/payment/callback` registered in Paystack Dashboard [https://dashboard.paystack.co/#/settings/developer](https://dashboard.paystack.co/#/settings/developer) like so:
-
-![payment-callback](https://cloud.githubusercontent.com/assets/2946769/12746754/9bd383fc-c9a0-11e5-94f1-64433fc6a965.png)
-
-```php
-// Laravel 5.1.17 and above
-Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
-```
-
-OR
-
-```php
-Route::post('/pay', [
-    'uses' => 'PaymentController@redirectToGateway',
-    'as' => 'pay'
-]);
-```
-
-```php
-Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
-```
-
-OR
-
-```php
-// Laravel 5.0
-Route::get('payment/callback', [
-    'uses' => 'PaymentController@handleGatewayCallback'
-]);
-```
-
-```php
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Paystack;
-
-class PaymentController extends Controller
-{
-
-    /**
-     * Redirect the User to Paystack Payment Page
-     * @return Url
-     */
-    public function redirectToGateway()
-    {
-        return Paystack::getAuthorizationUrl()->redirectNow();
-    }
-
-    /**
-     * Obtain Paystack payment information
-     * @return void
-     */
-    public function handleGatewayCallback()
-    {
-        $paymentDetails = Paystack::getPaymentData();
-
-        dd($paymentDetails);
-        // Now you have the payment details,
-        // you can store the authorization_code in your db to allow for recurrent subscriptions
-        // you can then redirect or do whatever you want
-    }
-}
 ```
 
 Let me explain the fluent methods this package provides a bit here.
@@ -324,73 +151,117 @@ Paystack::updateSubAccount();
 paystack()->updateSubAccount();
 ```
 
-A sample form will look like so:
+## Installation
 
-```html
-<form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
-        <div class="row" style="margin-bottom:40px;">
-          <div class="col-md-8 col-md-offset-2">
-            <p>
-                <div>
-                    Lagos Eyo Print Tee Shirt
-                    ₦ 2,950
-                </div>
-            </p>
-            <input type="hidden" name="email" value="otemuyiwa@gmail.com"> {{-- required --}}
-            <input type="hidden" name="orderID" value="345">
-            <input type="hidden" name="amount" value="800"> {{-- required in kobo --}}
-            <input type="hidden" name="quantity" value="3">
-            <input type="hidden" name="currency" value="NGN">
-            <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
-            <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
-            {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
+[PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
 
-             <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}
-
-
-            <p>
-              <button class="btn btn-success btn-lg btn-block" type="submit" value="Pay Now!">
-              <i class="fa fa-plus-circle fa-lg"></i> Pay Now!
-              </button>
-            </p>
-          </div>
-        </div>
-</form>
-```
-
-When clicking the submit button the customer gets redirected to the Paystack site.
-
-So now we've redirected the customer to Paystack. The customer did some actions there (hopefully he or she paid the order) and now gets redirected back to our shop site.
-
-Paystack will redirect the customer to the url of the route that is specified in the Callback URL of the Web Hooks section on Paystack dashboard.
-
-We must validate if the redirect to our site is a valid request (we don't want imposters to wrongfully place non-paid order).
-
-In the controller that handles the request coming from the payment provider, we have
-
-`Paystack::getPaymentData()` - This function calls the verification methods and ensure it is a valid transction else it throws an exception.
-
-You can test with these details
+To get the latest version of Laravel Cloudinary, simply require it
 
 ```bash
-Card Number: 4123450131001381
-Expiry Date: any date in the future
-CVV: 883
+composer require unicodeveloper/laravel-cloudinary
 ```
 
-## Todo
+Or add the following line to the require block of your `composer.json` file.
 
-* Charge Returning Customers
-* Add Comprehensive Tests
-* Implement Transaction Dashboard to see all of the transactions in your laravel app
+```
+"unicodeveloper/laravel-cloudinary": "1.0.0-beta"
+```
 
-## Contributing
+You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
-Please feel free to fork this package and contribute by submitting a pull request to enhance the functionalities.
+
+Once Laravel Cloudinary is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
+
+```php
+'providers' => [
+    ...
+    Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class,
+    ...
+]
+```
+
+> If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-cloudinary#configuration)
+
+* `Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class`
+
+Also, register the Facade like so:
+
+```php
+'aliases' => [
+    ...
+    'Cloudinary' => Unicodeveloper\Cloudinary\Facades\Cloudinary::class,
+    ...
+]
+```
+
+## Configuration
+
+You can publish the configuration file using this command:
+
+```bash
+php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider"
+```
+
+A configuration-file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
+
+```php
+<?php
+return [
+    'notification_url' => env('CLOUDINARY_NOTIFICATION_URL', ''),
+
+    'account_details' => [
+
+        'account' => [
+            /**
+             * Cloud Name From Cloudinary Dashboard
+             *
+             */
+            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+
+            /**
+            * API Key From Cloudinary Dashboard
+            *
+            */
+            'api_key' => env('CLOUDINARY_API_KEY'),
+
+            /**
+             * API Secret From Cloudinary Dashboard
+             *
+             */
+            'api_secret' => env('CLOUDINARY_API_SECRET'),
+
+            /**
+            * Upload Preset From Cloudinary Dashboard
+            *
+            */
+            'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
+        ],
+
+        'url' => [
+            'secure' => true
+        ]
+    ]
+];
+```
+
+Open your .env file and add your Cloudinary cloud name, api key, api secret, and upload preset like so:
+
+```php
+CLOUDINARY_CLOUD_NAME=xxxxxxxxxxxxx
+CLOUDINARY_API_KEY=xxxxxxxxxxxxx
+CLOUDINARY_API_SECRET=xxxxxxxxxxxxx
+CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
+CLOUDINARY_NOTIFICATION_URL=
+```
+
+***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console)*
+
+*If you are using a hosting service like heroku,forge,digital ocean, etc, please ensure to add the above details to your configuration variables.*
+
 
 ## How can I thank you?
 
-Why not star the github repo? I'd love the attention! Why not share the link for this repository on Twitter or HackerNews? Spread the word!
+Why not star the GitHub repo? I'd love the attention! Why not share the link for this repository on Twitter or HackerNews? Spread the word!
 
 Don't forget to [follow me on twitter](https://twitter.com/unicodeveloper)!
 
