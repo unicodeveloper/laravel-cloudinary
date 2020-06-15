@@ -1,27 +1,32 @@
-# laravel-paystack
+# laravel-cloudinary
 
-[![Latest Stable Version](https://poser.pugx.org/unicodeveloper/laravel-paystack/v/stable.svg)](https://packagist.org/packages/unicodeveloper/laravel-paystack)
-[![License](https://poser.pugx.org/unicodeveloper/laravel-paystack/license.svg)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/unicodeveloper/laravel-paystack.svg)](https://travis-ci.org/unicodeveloper/laravel-paystack)
-[![Quality Score](https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-paystack.svg?style=flat-square)](https://scrutinizer-ci.com/g/unicodeveloper/laravel-paystack)
-[![Total Downloads](https://img.shields.io/packagist/dt/unicodeveloper/laravel-paystack.svg?style=flat-square)](https://packagist.org/packages/unicodeveloper/laravel-paystack)
+<p align="center"><img src="https://cloudinary-res.cloudinary.com/image/upload/fl_attachment/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.svg"></p>
 
-> A Laravel Package for working with Paystack seamlessly
+<p align="center">
+    [![Latest Stable Version](https://poser.pugx.org/unicodeveloper/laravel-cloudinary/v/stable.svg)](https://packagist.org/packages/unicodeveloper/laravel-cloudinary)
+    [![License](https://poser.pugx.org/unicodeveloper/laravel-cloudinary/license.svg)](LICENSE.md)
+    [![Build Status](https://img.shields.io/travis/unicodeveloper/laravel-cloudinary.svg)](https://travis-ci.org/unicodeveloper/laravel-cloudinary)
+    [![Quality Score](https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-cloudinary.svg?style=flat-square)](https://scrutinizer-ci.com/g/unicodeveloper/laravel-cloudinary)
+    [![Total Downloads](https://img.shields.io/packagist/dt/unicodeveloper/laravel-cloudinary.svg?style=flat-square)](https://packagist.org/packages/unicodeveloper/laravel-cloudinary)
+</p>
+
+
+> A Laravel Package for working with Cloudinary seamlessly
 
 ## Installation
 
 [PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
 
-To get the latest version of Laravel Paystack, simply require it
+To get the latest version of Laravel Cloudinary, simply require it
 
 ```bash
-composer require unicodeveloper/laravel-paystack
+composer require unicodeveloper/laravel-cloudinary
 ```
 
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"unicodeveloper/laravel-paystack": "1.0.*"
+"unicodeveloper/laravel-cloudinary": "1.0.*"
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
@@ -38,7 +43,7 @@ Once Laravel Paystack is installed, you need to register the service provider. O
 ]
 ```
 
-> If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-paystack#configuration)
+> If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-cloudinary#configuration)
 
 * `Unicodeveloper\Paystack\PaystackServiceProvider::class`
 
