@@ -21,7 +21,7 @@ return [
     |
     |
     */
-    'notification_url' => env('CLOUDINARY_NOTIFICATION_URL', ''),
+    'notification_url' => env('CLOUDINARY_NOTIFICATION_URL'),
 
 
     /*
@@ -34,31 +34,11 @@ return [
     |
     |
     */
+    'cloud_url' => env('CLOUDINARY_URL'),
 
-    'account_details' => [
-
-        'account' => [
-            /**
-             * Cloud Name From Cloudinary Dashboard
-             *
-             */
-            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-
-            /**
-            * API Key From Cloudinary Dashboard
-            *
-            */
-            'api_key' => env('CLOUDINARY_API_KEY'),
-
-            /**
-             * API Secret From Cloudinary Dashboard
-             *
-             */
-            'api_secret' => env('CLOUDINARY_API_SECRET')
-        ],
-
-        'url' => [
-            'secure' => true
-        ]
-    ]
+    /**
+    * Upload Preset From Cloudinary Dashboard
+    *
+    */
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
 ];

@@ -30,9 +30,7 @@ class FetchFilesCommand extends Command
     public function handle(CloudinaryEngine $engine)
     {
 
-        if(! config('cloudinary.account_details.account.cloud_name') ||
-            ! config('cloudinary.account_details.account.api_key')   ||
-            ! config('cloudinary.account_details.account.api_secret')) {
+        if(! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;

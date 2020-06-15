@@ -69,7 +69,7 @@ class CloudinaryEngine
      */
     public function setCloudinaryConfig()
     {
-        $config = config('cloudinary.account_details');
+        $config = config('cloudinary.cloud_url');
         $this->cloudinaryConfig = $config;
     }
 
@@ -80,6 +80,33 @@ class CloudinaryEngine
     public function bootCloudinary()
     {
         $this->cloudinary = new Cloudinary($this->cloudinaryConfig);
+    }
+
+    /**
+    * Expose the Cloudinary Admin Functionality
+    *
+    */
+    public function admin()
+    {
+        return $this->cloudinary->adminApi();
+    }
+
+    /**
+    * Expose the Cloudinary Search Functionality
+    *
+    */
+    public function search()
+    {
+        return $this->cloudinary->searchApi();
+    }
+
+    /**
+    * Expose the Cloudinary Upload Functionality
+    *
+    */
+    public function uploadApi()
+    {
+        return $this->cloudinary->uploadApi();
     }
 
     /**
@@ -157,6 +184,11 @@ class CloudinaryEngine
     public function unsignedUploadAsync($file, $uploadPreset, $options = [])
     {
         return $this->cloudinary->uploadApi()->unsignedUploadAsync($file, $uploadPreset, $options);
+    }
+
+    public function uploadApi()
+    {
+        return $this->cloudinary->uploadApi();
     }
 
     /**
@@ -354,6 +386,11 @@ class CloudinaryEngine
     public function getFile($publicId)
     {
         return $this->cloudinary->raw($publicId);
+    }
+
+    public function getImageTag($publicId)
+    {
+        return $this->cloudinary->imageTag($publicId);
     }
 
     /*
