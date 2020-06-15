@@ -4,9 +4,6 @@
 
 <p align="center">
     <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
-        <img src="https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-cloudinary.svg?style=flat-square" alt="Quality Score">
-    </a>
-    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
         <img src="https://img.shields.io/packagist/dt/unicodeveloper/laravel-cloudinary.svg?style=flat-square" alt="Total Downloads">
     </a>
     <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
