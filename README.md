@@ -22,7 +22,7 @@
 
 ## Usage
 
-Upload a file (Image, Video or any type of File) to Cloudinary:
+Upload a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**:
 
 ```php
 
