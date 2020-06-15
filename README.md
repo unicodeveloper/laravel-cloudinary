@@ -169,7 +169,7 @@ php artisan cloudinary:rename
 /**
  * Upload a File to Cloudinary
  */
-php artisancloudinary:upload
+php artisan cloudinary:upload
 ```
 
 
