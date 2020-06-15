@@ -1,11 +1,21 @@
-<p align="center"><img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_86/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.png"></p>
+<p align="center">
+    <img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_86/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.png">
+    Laravel Cloudinary
+</p>
 
 <p align="center">
-    [![Latest Stable Version](https://poser.pugx.org/unicodeveloper/laravel-cloudinary/v/stable.svg)](https://packagist.org/packages/unicodeveloper/laravel-cloudinary)
-    [![License](https://poser.pugx.org/unicodeveloper/laravel-cloudinary/license.svg)](LICENSE.md)
-    [![Build Status](https://img.shields.io/travis/unicodeveloper/laravel-cloudinary.svg)](https://travis-ci.org/unicodeveloper/laravel-cloudinary)
-    [![Quality Score](https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-cloudinary.svg?style=flat-square)](https://scrutinizer-ci.com/g/unicodeveloper/laravel-cloudinary)
-    [![Total Downloads](https://img.shields.io/packagist/dt/unicodeveloper/laravel-cloudinary.svg?style=flat-square)](https://packagist.org/packages/unicodeveloper/laravel-cloudinary)
+    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
+        <img src="https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-cloudinary.svg?style=flat-square" alt="Quality Score">
+    </a>
+    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
+        <img src="https://img.shields.io/packagist/dt/unicodeveloper/laravel-cloudinary.svg?style=flat-square" alt="Total Downloads">
+    </a>
+    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
+        <img src="https://poser.pugx.org/unicodeveloper/laravel-cloudinary/v/stable.svg" alt="Latest Stable Version">
+    </a>
+    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
+        <img src="https://poser.pugx.org/unicodeveloper/laravel-cloudinary/license.svg" alt="License">
+    </a>
 </p>
 
 
