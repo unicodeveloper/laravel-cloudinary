@@ -1,6 +1,6 @@
 # laravel-cloudinary
 
-<p align="center"><img src="https://cloudinary-res.cloudinary.com/image/upload/fl_attachment/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.svg"></p>
+<p align="center"><img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_86/v1/logo/for_white_bg/cloudinary_vertical_logo_for_white_bg.svg"></p>
 
 <p align="center">
     [![Latest Stable Version](https://poser.pugx.org/unicodeveloper/laravel-cloudinary/v/stable.svg)](https://packagist.org/packages/unicodeveloper/laravel-cloudinary)
