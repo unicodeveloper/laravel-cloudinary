@@ -1,5 +1,5 @@
 <div align="center">
-    <h2> Laravel Cloudinary </h2>
+    <h1> Laravel Cloudinary </h1>
 </div>
 
 <p align="center">
@@ -17,138 +17,59 @@
     </a>
 </p>
 
-> A Laravel Package for easily uploading, optimizing, transforming and delivering media files with Cloudinary. It provides a fluent and expressive API to easily attach your media files to Eloquent models.
+> A Laravel Package for uploading, optimizing, transforming and delivering media files with Cloudinary. It provides a fluent and expressive API to easily attach your media files to Eloquent models.
 
 
 ## Usage
 
-Upload a file to Cloudinary:
+Upload a file (Image, Video or any type of File) to Cloudinary:
 
 ```php
 
-```
-
-Let me explain the fluent methods this package provides a bit here.
-```php
 /**
- *  This fluent method does all the dirty work of sending a POST request with the form data
- *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
- *  Payment Page. We've abstracted all of it, so you don't have to worry about that.
- *  Just eat your cookies while coding!
- */
-Paystack::getAuthorizationUrl()->redirectNow();
-
-/**
- * Alternatively, use the helper.
- */
-paystack()->getAuthorizationUrl()->redirectNow();
-
-/**
- * This fluent method does all the dirty work of verifying that the just concluded transaction was actually valid,
- * It verifies the transaction reference with Paystack Api and then grabs the data returned from Paystack.
- * In that data, we have a lot of good stuff, especially the `authorization_code` that you can save in your db
- * to allow for easy recurrent subscription.
- */
-Paystack::getPaymentData();
-
-/**
- * Alternatively, use the helper.
- */
-paystack()->getPaymentData();
-
-/**
- * This method gets all the customers that have performed transactions on your platform with Paystack
- * @returns array
- */
-Paystack::getAllCustomers();
-
-/**
- * Alternatively, use the helper.
- */
-paystack()->getAllCustomers();
-
-
-/**
- * This method gets all the plans that you have registered on Paystack
- * @returns array
- */
-Paystack::getAllPlans();
-
-/**
- * Alternatively, use the helper.
- */
-paystack()->getAllPlans();
-
-
-/**
- * This method gets all the transactions that have occurred
- * @returns array
- */
-Paystack::getAllTransactions();
-
-/**
- * Alternatively, use the helper.
- */
-paystack()->getAllTransactions();
-
-/**
- * This method generates a unique super secure cryptograhical hash token to use as transaction reference
- * @returns string
- */
-Paystack::genTranxRef();
-
-/**
- * Alternatively, use the helper.
- */
-paystack()->genTranxRef();
-
-
-/**
-* This method creates a subaccount to be used for split payments
-* @return array
+*  Using the Cloudinary Facade
 */
-Paystack::createSubAccount();
+
+// Upload an Image File to Cloudinary with One line of Code
+$uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
+
+// Upload an Video File to Cloudinary with One line of Code
+$uploadedFileUrl = Cloudinary::uploadVideo($request->file('file')->getRealPath())->getSecurePath();
+
+// Upload any File to Cloudinary with One line of Code
+$uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
 
 /**
- * Alternatively, use the helper.
+ *  This package also exposes a helper function you can use if you are not a fan of Facades
+ *  Shorter, expressive, fluent using the
+ *  cloudinary() function
  */
-paystack()->createSubAccount();
 
+// Upload an Image File to Cloudinary with One line of Code
+$uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
+
+// Upload an Video File to Cloudinary with One line of Code
+$uploadedFileUrl = cloudinary()->uploadVideo($request->file('file')->getRealPath())->getSecurePath();
+
+// Upload any File to Cloudinary with One line of Code
+$uploadedFileUrl = cloudinary()->uploadFile($request->file('file')->getRealPath())->getSecurePath();
 
 /**
-* This method fetches the details of a subaccount
-* @return array
-*/
-Paystack::fetchSubAccount();
-
-/**
- * Alternatively, use the helper.
+ *  You can also skip the Cloudinary Facade or helper method and laravel-ize your uploads by simply calling the
+ *  storeOnCloudinary() method on the file itself
  */
-paystack()->fetchSubAccount();
 
+// Store the uploaded file on Cloudinary
+$result = $request->file('file')->storeOnCloudinary();
 
-/**
-* This method lists the subaccounts associated with your paystack account
-* @return array
-*/
-Paystack::listSubAccounts();
+// Store the uploaded file on Cloudinary
+$result = $request->file->storeOnCloudinary();
 
-/**
- * Alternatively, use the helper.
- */
-paystack()->listSubAccounts();
+// Store the uploaded file in the "lambogini" directory on Cloudinary
+$result = $request->file->storeOnCloudinary('lambogini');
 
-
-/**
-* This method Updates a subaccount to be used for split payments
-* @return array
-*/
-Paystack::updateSubAccount();
-
-/**
- * Alternatively, use the helper.
- */
-paystack()->updateSubAccount();
+// Store the uploaded file in the "lambogini" directory on Cloudinary with the filename "prosper"
+$result = $request->file->storeOnCloudinaryAs('lambogini', 'prosper');
 ```
 
 ## Installation
