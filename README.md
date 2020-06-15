@@ -70,13 +70,26 @@ $result = $request->file->storeOnCloudinary('lambogini');
 
 // Store the uploaded file in the "lambogini" directory on Cloudinary with the filename "prosper"
 $result = $request->file->storeOnCloudinaryAs('lambogini', 'prosper');
+
+$result->getPath(); // Get the url of the uploaded file; http
+$result->getSecurePath(); // Get the url of the uploaded file; https
+$result->getSize(); // Get the size of the uploaded file in bytes
+$result->getReadableSize(); // Get the size of the uploaded file in bytes, megabytes, gigabytes or terabytes. E.g 1.8 MB
+$result->getFileType(); // Get the type of the uploaded file
+$result->getFileName(); // Get the file name of the uploaded file
+$result->getOriginalFileName(); // Get the file name of the file before it was uploaded to Cloudinary
+$result->getPublicId(); // Get the public_id of the uploaded file
+$result->getExtension(); // Get the extension of the uploaded file
+$result->getWidth(); // Get the width of the uploaded file
+$result->getHeight(); // Get the height of the uploaded file
+$result->getTimeUploaded(); // Get the time the file was uploaded
 ```
 
 ## Installation
 
-[PHP](https://php.net) 5.4+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
+[PHP](https://php.net) 7.1+ or [HHVM](http://hhvm.com) 3.3+, and [Composer](https://getcomposer.org) are required.
 
-To get the latest version of Laravel Cloudinary, simply require it
+To get the latest version of Laravel Cloudinary, simply require it:
 
 ```bash
 composer require unicodeveloper/laravel-cloudinary
@@ -101,11 +114,9 @@ Once Laravel Cloudinary is installed, you need to register the service provider.
 ]
 ```
 
-> If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-cloudinary#configuration)
+> Note: If you use **Laravel >= 5.5** you can skip this step (adding the code above to the providers key) and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-cloudinary#configuration)
 
-* `Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class`
-
-Also, register the Facade like so:
+Also, register the Cloudinary Facade like so:
 
 ```php
 'aliases' => [
