@@ -138,11 +138,11 @@ class CloudinaryServiceProvider extends ServiceProvider
         $engine = new CloudinaryEngine;
 
         UploadedFile::macro('storeOnCloudinary', function ($folder = null) use ($engine) {
-            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder])->getSecurePath();
+            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder]);
         });
 
         UploadedFile::macro('storeOnCloudinaryAs', function ($folder = null, $publicId = null) use ($engine) {
-            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder, 'public_id' => $publicId])->getSecurePath();
+            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder, 'public_id' => $publicId]);
         });
     }
 }
