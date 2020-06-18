@@ -293,15 +293,6 @@ Cloudinary relies on its own JavaScript library to initiate the Cloudinary Uploa
 
 ***Note:** ONLY LOAD THIS IF YOU HAVE DECIDED TO USE THE UPLOAD WIDGET. IF YOU ARE USING THIS PACKAGE FOR A LARAVEL API BACKEND, YOU DON'T NEED TO DO THIS!*
 
-## How can I thank you?
-
-Why not star the GitHub repo? I'd love the attention! Why not share the link for this repository on Twitter or HackerNews? Spread the word!
-
-Don't forget to [follow me on twitter](https://twitter.com/unicodeveloper)!
-
-Thanks!
-Prosper Otemuyiwa.
-
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
