@@ -14,6 +14,11 @@ use Unicodeveloper\Cloudinary\Commands\DeleteFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\GenerateArchiveCommand;
 use Unicodeveloper\Cloudinary\Commands\GenerateZipCommand;
 
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\Filesystem;
+use Cloudinary\Cloudinary;
+use Spatie\FlysystemDropbox\DropboxAdapter;
+
 class CloudinaryServiceProvider extends ServiceProvider
 {
     /**
@@ -30,6 +35,16 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->bootComponents();
         $this->bootCommands();
         $this->bootPublishing();
+
+        Storage::extend('cloudinary', function () {
+            $client = new Cloudinary(
+                $config['authorization_token']
+            );
+
+            $config = config('cloudinary.cloud_url');
+
+            return new Filesystem(new CloudinaryAdapter($client));
+        });
     }
 
     /**
