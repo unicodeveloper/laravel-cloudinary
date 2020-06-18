@@ -34,10 +34,7 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->bootComponents();
         $this->bootCommands();
         $this->bootPublishing();
-
-        Storage::extend('cloudinary', function () {
-            return new Filesystem(new CloudinaryAdapter(config('cloudinary.cloud_url')));
-        });
+        $this->bootCloudinaryDriver();
     }
 
     /**
@@ -54,7 +51,7 @@ class CloudinaryServiceProvider extends ServiceProvider
     }
 
 
-    public function bootCommands()
+    protected function bootCommands()
     {
         /**
         * Register Laravel Cloudinary Artisan commands
@@ -149,6 +146,15 @@ class CloudinaryServiceProvider extends ServiceProvider
 
         UploadedFile::macro('storeOnCloudinaryAs', function ($folder = null, $publicId = null) use ($engine) {
             return $engine->uploadFile($this->getRealPath(), ['folder' => $folder, 'public_id' => $publicId]);
+        });
+    }
+
+    protected function bootCloudinaryDriver()
+    {
+        $this->app['config']['filesystems.disks.cloudinary'] = ['driver' => 'cloudinary'];
+
+        Storage::extend('cloudinary', function ($app, $config) {
+            return new Filesystem(new CloudinaryAdapter(config('cloudinary.cloud_url')));
         });
     }
 }

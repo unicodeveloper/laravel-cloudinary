@@ -62,14 +62,20 @@ class CloudinaryAdapter implements AdapterInterface
 
         $resourceType = $options->has('resource_type') ? $options->get('resource_type') : 'auto';
 
+        $fileExtension = pathinfo($publicId, PATHINFO_EXTENSION);
+
+        $newPublicId = $fileExtension ? substr($publicId, 0, - (strlen($fileExtension) + 1)) : $publicId;
+
         $uploadOptions = [
-            'public_id' => $publicId,
+            'public_id' => $newPublicId,
             'resource_type' => $resourceType
-        ]
+        ];
 
         $resourceMetadata = stream_get_meta_data($resource);
 
-        return $this->uploadApi()->upload($resourceMetadata['uri'], $uploadOptions)
+        $result = resolve(CloudinaryEngine::class)->upload($resourceMetadata['uri'], $uploadOptions);
+
+        return $result;
     }
 
 
@@ -119,9 +125,9 @@ class CloudinaryAdapter implements AdapterInterface
         $pathInfo = pathinfo($path);
         $newPathInfo = pathinfo($newpath);
 
-        $remotePath = $pathInfo['dirname'] != '.') ? pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
+        $remotePath = ($pathInfo['dirname'] != '.') ? pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
 
-        $remoteNewPath = $pathInfo['dirname'] != '.') ? $newPathInfo['dirname'] . '/' . $newPathInfo['filename'] : $newPathInfo['filename'];
+        $remoteNewPath = ($pathInfo['dirname'] != '.') ? $newPathInfo['dirname'] . '/' . $newPathInfo['filename'] : $newPathInfo['filename'];
 
         $result = $this->uploadApi()->rename($remotePath, $remoteNewPath);
 
@@ -195,13 +201,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function has($path)
     {
-        try {
-            $this->adminApi()->resource($path);
-        } catch (Exception $e) {
-            return false;
-        }
-
-        return true;
+        return file_exists($path);
     }
 
     /**
@@ -275,7 +275,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getMetadata($path)
     {
-        return $this->prepareResourceMetadata($this->getResource($path));
+       return $this->prepareResourceMetadata($this->getResource($path));
     }
 
     /**
