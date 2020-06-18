@@ -36,9 +36,7 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->bootPublishing();
 
         Storage::extend('cloudinary', function () {
-            $config = config('cloudinary.cloud_url');
-
-            return new Filesystem(new CloudinaryAdapter($client));
+            return new Filesystem(new CloudinaryAdapter(config('cloudinary.cloud_url')));
         });
     }
 
@@ -53,8 +51,6 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->app->singleton(CloudinaryEngine::class, function ($app) {
             return new CloudinaryEngine;
         });
-
-        //$this->app->alias('cloudinary.engine', CloudinaryEngine::class);
     }
 
 
