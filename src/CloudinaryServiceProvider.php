@@ -2,10 +2,13 @@
 
 namespace Unicodeveloper\Cloudinary;
 
-use Illuminate\Support\Facades\Request;
+use League\Flysystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Request;
+use Unicodeveloper\Cloudinary\CloudinaryAdapter;
 use Unicodeveloper\Cloudinary\Commands\BackupFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\UploadFileCommand;
 use Unicodeveloper\Cloudinary\Commands\FetchFilesCommand;
@@ -14,10 +17,6 @@ use Unicodeveloper\Cloudinary\Commands\DeleteFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\GenerateArchiveCommand;
 use Unicodeveloper\Cloudinary\Commands\GenerateZipCommand;
 
-use Illuminate\Support\Facades\Storage;
-use League\Flysystem\Filesystem;
-use Cloudinary\Cloudinary;
-use Spatie\FlysystemDropbox\DropboxAdapter;
 
 class CloudinaryServiceProvider extends ServiceProvider
 {
@@ -37,10 +36,6 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->bootPublishing();
 
         Storage::extend('cloudinary', function () {
-            $client = new Cloudinary(
-                $config['authorization_token']
-            );
-
             $config = config('cloudinary.cloud_url');
 
             return new Filesystem(new CloudinaryAdapter($client));
