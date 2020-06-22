@@ -27,7 +27,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->bootMacros();
+        // $this->bootMacros();
         $this->bootResources();
         $this->bootMigrations();
         $this->bootDirectives();
