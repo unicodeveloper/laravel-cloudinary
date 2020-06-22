@@ -34,7 +34,7 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->bootComponents();
         $this->bootCommands();
         $this->bootPublishing();
-       // $this->bootCloudinaryDriver();
+        $this->bootCloudinaryDriver();
     }
 
     /**
@@ -45,9 +45,9 @@ class CloudinaryServiceProvider extends ServiceProvider
     public function register()
     {
         // Register the service the package provides.
-        // $this->app->singleton(CloudinaryEngine::class, function ($app) {
-        //     return new CloudinaryEngine;
-        // });
+        $this->app->singleton(CloudinaryEngine::class, function ($app) {
+            return new CloudinaryEngine;
+        });
     }
 
 
