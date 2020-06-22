@@ -27,7 +27,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->bootMacros();
+        $this->bootMacros();
         $this->bootResources();
         $this->bootMigrations();
         $this->bootDirectives();
@@ -140,14 +140,13 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     protected function bootMacros()
     {
-        $engine = new CloudinaryEngine;
 
-        UploadedFile::macro('storeOnCloudinary', function ($folder = null) use ($engine) {
-            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder]);
+        UploadedFile::macro('storeOnCloudinary', function ($folder = null) {
+            return resolve(CloudinaryEngine::class)->uploadFile($this->getRealPath(), ['folder' => $folder]);
         });
 
-        UploadedFile::macro('storeOnCloudinaryAs', function ($folder = null, $publicId = null) use ($engine) {
-            return $engine->uploadFile($this->getRealPath(), ['folder' => $folder, 'public_id' => $publicId]);
+        UploadedFile::macro('storeOnCloudinaryAs', function ($folder = null, $publicId = null) {
+            return resolve(CloudinaryEngine::class)->uploadFile($this->getRealPath(), ['folder' => $folder, 'public_id' => $publicId]);
         });
     }
 
