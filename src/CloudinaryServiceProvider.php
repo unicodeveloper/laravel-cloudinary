@@ -34,7 +34,7 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->bootComponents();
         $this->bootCommands();
         $this->bootPublishing();
-        $this->bootCloudinaryDriver();
+       // $this->bootCloudinaryDriver();
     }
 
     /**
