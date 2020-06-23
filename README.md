@@ -30,7 +30,7 @@
 // Upload an Image File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
 
-// Upload an Video File to Cloudinary with One line of Code
+// Upload a Video File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::uploadVideo($request->file('file')->getRealPath())->getSecurePath();
 
 // Upload any File to Cloudinary with One line of Code
@@ -45,7 +45,7 @@ $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath())
 // Upload an Image File to Cloudinary with One line of Code
 $uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
 
-// Upload an Video File to Cloudinary with One line of Code
+// Upload a Video File to Cloudinary with One line of Code
 $uploadedFileUrl = cloudinary()->uploadVideo($request->file('file')->getRealPath())->getSecurePath();
 
 // Upload any File to Cloudinary with One line of Code
