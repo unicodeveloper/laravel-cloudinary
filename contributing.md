@@ -30,3 +30,6 @@ $ composer test
 
 
 **Happy coding**!
+
+
+Daniel Alabuja
