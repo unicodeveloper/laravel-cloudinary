@@ -136,9 +136,9 @@ Use the `x-upload-button` Blade component that ships with this Package like so:
         @cloudinaryJS
     </head>
     <body>
-        <x-upload-button>
+        <x-cld-upload-button>
             Upload Files
-        </x-upload-button>
+        </x-cld-upload-button>
     </body>
 </html>
 ````
@@ -250,7 +250,7 @@ return [
     |
     |
     */
-    'cloud_url' => env('CLOUDINARY_CLOUD_URL'),
+    'cloud_url' => env('CLOUDINARY_URL'),
 
     /**
     * Upload Preset From Cloudinary Dashboard
@@ -264,7 +264,7 @@ return [
 Open your `.env` file and add your API Environment variable, upload_preset (this is optional, until you need to use the widget) like so:
 
 ```php
-CLOUDINARY_CLOUD_URL=xxxxxxxxxxxxx
+CLOUDINARY_URL=xxxxxxxxxxxxx
 CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
 CLOUDINARY_NOTIFICATION_URL=
 ```
