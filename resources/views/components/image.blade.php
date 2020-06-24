@@ -1,3 +1,3 @@
 @php
- echo cloudinary()->getImageTag("{$publicId}")->scale(500,500)->crop()->serialize();
+ echo cloudinary()->getImageTag($publicId ?? '')->scale($width ?? '', $height ?? '')->serialize();
 @endphp
