@@ -127,7 +127,7 @@ $page->detachMedia($file)  // Example of $file is $request->file('file');
 
 **Upload Files Via An Upload Widget**:
 
-Use the `x-upload-button` Blade component that ships with this Package like so:
+Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
 ```
 <!DOCTYPE html>
 <html>
@@ -142,6 +142,14 @@ Use the `x-upload-button` Blade component that ships with this Package like so:
     </body>
 </html>
 ````
+
+Other Blade components you can use are:
+
+```php
+<x-cld-image public-id="prosper" width="300" height="300"></x-cld-image> // Blade Image Component for displaying images
+
+<x-cld-video public-id="awesome"></x-cld-video> // Blade Video Component for displaying videos
+```
 
 **Media Management via The Command Line**:
 
