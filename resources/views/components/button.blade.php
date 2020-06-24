@@ -3,8 +3,6 @@
     var cloudName = @json(config('cloudinary.cloud_url'));
     var uploadPreset = @json(config('cloudinary.upload_preset'));
 
-    config('cloudinary.cloud_url')
-
     function openWidget() {
         window.cloudinary.openUploadWidget(
             { cloud_name: cloudName,
