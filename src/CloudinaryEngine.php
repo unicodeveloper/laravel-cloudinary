@@ -388,6 +388,11 @@ class CloudinaryEngine
         return $this->cloudinary->imageTag($publicId);
     }
 
+    public function getVideoTag($publicId)
+    {
+        return $this->cloudinary->videoTag($publicId);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Cloudinary Tags
