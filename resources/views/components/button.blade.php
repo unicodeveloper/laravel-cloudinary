@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-    var cloudName = @json(config('cloudinary.cloud_url'));
+    var cloudName = @json(config('cloudinary.cloud_name'));
     var uploadPreset = @json(config('cloudinary.upload_preset'));
 
     function openWidget() {
