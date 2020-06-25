@@ -40,11 +40,5 @@ return [
     * Upload Preset From Cloudinary Dashboard
     *
     */
-    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
-
-    /**
-    * Cloud name From Cloudinary Dashboard
-    *
-    */
-    'cloud_name' => env('CLOUD_NAME')
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
 ];
