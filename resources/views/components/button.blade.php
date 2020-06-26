@@ -10,18 +10,12 @@
             },
             (error, result) => {
               if (!error && result && result.event === "success") {
-                console.log('Done uploading..: ', result.info);
-                document.getElementById("showImg").src = result.info.url;
-                document.getElementById("showImg").width = 350;
-                document.getElementById("showImg").height = 350;
+                console.log('Done uploading..');
+                localStorage.setItem("cloud_image_url", result.info.url);
               }
         }).open();
     }
 </script>
-
-<div>
-    <img src="" id="showImg" />
-</div>
 
 <button type="button" onclick="openWidget()">
   {{ $slot }}
