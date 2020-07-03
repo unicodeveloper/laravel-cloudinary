@@ -2,13 +2,17 @@
 
 namespace Unicodeveloper\Cloudinary;
 
+use Cloudinary\Api\Exception\ApiError;
 use Cloudinary\Cloudinary;
-use League\Flysystem\Config;
-use League\Flysystem\Util\MimeType;
-use League\Flysystem\AdapterInterface;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
+use League\Flysystem\AdapterInterface;
+use League\Flysystem\Config;
 
-
+/**
+ * Class CloudinaryAdapter
+ *
+ * @package Unicodeveloper\Cloudinary
+ */
 class CloudinaryAdapter implements AdapterInterface
 {
     use NotSupportingVisibilityTrait;
@@ -20,6 +24,7 @@ class CloudinaryAdapter implements AdapterInterface
     /**
      * Constructor
      * Sets configuration for Cloudinary Api.
+     *
      * @param string $config Cloudinary configuration
      */
     public function __construct(string $config)
@@ -35,7 +40,7 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string $path
      * @param string $contents
-     * @param Config $options   Config object
+     * @param Config $options Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -43,7 +48,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         fwrite(tmpfile(), $contents);
 
-        return $this->writeStream($path, $tempFile, $options);
+        return $this->writeStream($path, $tempFile, $options); // [CN] Where is $tempFile defined?
     }
 
 
@@ -52,7 +57,7 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string   $path
      * @param resource $resource
-     * @param Config   $options   Config object
+     * @param Config   $options Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -64,11 +69,11 @@ class CloudinaryAdapter implements AdapterInterface
 
         $fileExtension = pathinfo($publicId, PATHINFO_EXTENSION);
 
-        $newPublicId = $fileExtension ? substr($publicId, 0, - (strlen($fileExtension) + 1)) : $publicId;
+        $newPublicId = $fileExtension ? substr($publicId, 0, -(strlen($fileExtension) + 1)) : $publicId;
 
         $uploadOptions = [
-            'public_id' => $newPublicId,
-            'resource_type' => $resourceType
+            'public_id'     => $newPublicId,
+            'resource_type' => $resourceType,
         ];
 
         $resourceMetadata = stream_get_meta_data($resource);
@@ -85,7 +90,7 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string $path
      * @param string $contents
-     * @param Config $options   Config object
+     * @param Config $options Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -101,7 +106,7 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string   $path
      * @param resource $resource
-     * @param Config   $options   Config object
+     * @param Config   $options Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -122,7 +127,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function rename($path, $newpath)
     {
-        $pathInfo = pathinfo($path);
+        $pathInfo    = pathinfo($path);
         $newPathInfo = pathinfo($newpath);
 
         $remotePath = ($pathInfo['dirname'] != '.') ? pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
@@ -142,6 +147,8 @@ class CloudinaryAdapter implements AdapterInterface
      * @param string $newpath
      *
      * @return bool
+     *
+     * @throws ApiError
      */
     public function copy($path, $newpath)
     {
@@ -149,6 +156,7 @@ class CloudinaryAdapter implements AdapterInterface
 
         return is_array($result) ? $result['public_id'] == $newpath : false;
     }
+
     /**
      * Delete a file.
      *
@@ -170,6 +178,8 @@ class CloudinaryAdapter implements AdapterInterface
      * @param string $dirname
      *
      * @return bool
+     *
+     * @throws ApiError
      */
     public function deleteDir($dirname)
     {
@@ -177,6 +187,7 @@ class CloudinaryAdapter implements AdapterInterface
 
         return true;
     }
+
     /**
      * Create a directory.
      *
@@ -184,6 +195,8 @@ class CloudinaryAdapter implements AdapterInterface
      * @param Config $options
      *
      * @return bool
+     *
+     * @throws ApiError
      */
     public function createDir($dirname, Config $options)
     {
@@ -213,7 +226,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function read($path)
     {
-        $resource = (array) $this->adminApi()->resource($path);
+        $resource = (array)$this->adminApi()->resource($path);
         $contents = file_get_contents($resource['secure_url']);
 
         return compact('contents', 'path');
@@ -228,9 +241,9 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function readStream($path)
     {
-        $resource = (array) $this->adminApi()->resource($path);
+        $resource = (array)$this->adminApi()->resource($path);
 
-        $stream = fopen($resource['secure_url'], 'r');
+        $stream = fopen($resource['secure_url'], 'rb');
 
         return compact('stream', 'path');
     }
@@ -239,7 +252,7 @@ class CloudinaryAdapter implements AdapterInterface
      * List contents of a directory.
      *
      * @param string $directory
-     * @param bool   $recursive
+     * @param bool   $hasRecursive
      *
      * @return array
      */
@@ -250,12 +263,14 @@ class CloudinaryAdapter implements AdapterInterface
         // get resources array
         $response = null;
         do {
-            $response = (array) $this->adminApi()->resources([
-                'type' => 'upload',
-                'prefix' => $directory,
-                'max_results' => 500,
-                'next_cursor' => isset($response['next_cursor']) ? $response['next_cursor'] : null,
-            ]);
+            $response  = (array)$this->adminApi()->resources(
+                [
+                    'type'        => 'upload',
+                    'prefix'      => $directory,
+                    'max_results' => 500,
+                    'next_cursor' => isset($response['next_cursor']) ? $response['next_cursor'] : null,
+                ]
+            );
             $resources = array_merge($resources, $response['resources']);
         } while (array_key_exists('next_cursor', $response));
 
@@ -263,6 +278,7 @@ class CloudinaryAdapter implements AdapterInterface
         foreach ($resources as $i => $resource) {
             $resources[$i] = $this->prepareResourceMetadata($resource);
         }
+
         return $resources;
     }
 
@@ -275,17 +291,19 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getMetadata($path)
     {
-       return $this->prepareResourceMetadata($this->getResource($path));
+        return $this->prepareResourceMetadata($this->getResource($path));
     }
 
     /**
      * Get Resource data
-     * @param  string $path
+     *
+     * @param string $path
+     *
      * @return array
      */
     public function getResource($path)
     {
-        return (array) $this->adminApi()->resource($path);
+        return (array)$this->adminApi()->resource($path);
     }
 
     /**
@@ -326,65 +344,77 @@ class CloudinaryAdapter implements AdapterInterface
 
     /**
      * Prepare apropriate metadata for resource metadata given from cloudinary.
-     * @param  array $resource
+     *
+     * @param array $resource
+     *
      * @return array
      */
     protected function prepareResourceMetadata($resource)
     {
         $resource['type'] = 'file';
         $resource['path'] = $resource['public_id'];
-        $resource = array_merge($resource, $this->prepareSize($resource));
-        $resource = array_merge($resource, $this->prepareTimestamp($resource));
-        $resource = array_merge($resource, $this->prepareMimetype($resource));
+        $resource         = array_merge($resource, $this->prepareSize($resource));
+        $resource         = array_merge($resource, $this->prepareTimestamp($resource));
+        $resource         = array_merge($resource, $this->prepareMimetype($resource));
+
         return $resource;
     }
 
     /**
      * prepare mimetype response
-     * @param  array $resource
+     *
+     * @param array $resource
+     *
      * @return array
      */
     protected function prepareMimetype($resource)
     {
         $mimetype = $resource['resource_type'];
+
         return compact('mimetype');
     }
 
     /**
      * prepare timestpamp response
-     * @param  array $resource
+     *
+     * @param array $resource
+     *
      * @return array
      */
     protected function prepareTimestamp($resource)
     {
         $timestamp = strtotime($resource['created_at']);
+
         return compact('timestamp');
     }
 
     /**
      * prepare size response
+     *
      * @param array $resource
+     *
      * @return array
      */
     protected function prepareSize($resource)
     {
         $size = $resource['bytes'];
+
         return compact('size');
     }
 
     /**
-    * Expose the Cloudinary v2 Upload Functionality
-    *
-    */
+     * Expose the Cloudinary v2 Upload Functionality
+     *
+     */
     protected function uploadApi()
     {
         return $this->cloudinary->uploadApi();
     }
 
     /**
-    * Expose the Cloudinary v2 Upload Functionality
-    *
-    */
+     * Expose the Cloudinary v2 Upload Functionality
+     *
+     */
     protected function adminApi()
     {
         return $this->cloudinary->adminApi();

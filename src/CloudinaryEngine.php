@@ -11,10 +11,19 @@
 
 namespace Unicodeveloper\Cloudinary;
 
+use Cloudinary\Api\ApiResponse;
+use Cloudinary\Api\Exception\ApiError;
+use Cloudinary\Asset\File;
+use Cloudinary\Asset\Image;
+use Cloudinary\Asset\Video;
 use Cloudinary\Cloudinary;
-use Illuminate\Support\Facades\Config;
-use Unicodeveloper\Cloudinary\Exceptions\IsNullException;
+use Cloudinary\Configuration\Configuration;
 
+/**
+ * Class CloudinaryEngine
+ *
+ * @package Unicodeveloper\Cloudinary
+ */
 class CloudinaryEngine
 {
 
@@ -41,20 +50,23 @@ class CloudinaryEngine
 
     /**
      * Instance of Cloudinary
+     *
      * @var Cloudinary
      */
     protected $cloudinary;
 
     /**
-    * Instance of Cloudinary Config
-    * @var Configuration
-    */
+     * Instance of Cloudinary Config
+     *
+     * @var Configuration
+     */
     protected $cloudinaryConfig;
 
     /**
-    *  Response from Cloudinary
-    * @var Array
-    */
+     *  Response from Cloudinary
+     *
+     * @var array
+     */
     protected $response;
 
     public function __construct()
@@ -69,7 +81,7 @@ class CloudinaryEngine
      */
     public function setCloudinaryConfig()
     {
-        $config = config('cloudinary.cloud_url');
+        $config                 = config('cloudinary.cloud_url');
         $this->cloudinaryConfig = $config;
     }
 
@@ -83,51 +95,51 @@ class CloudinaryEngine
     }
 
     /**
-    * Expose the Cloudinary Admin Functionality
-    *
-    */
+     * Expose the Cloudinary Admin Functionality
+     *
+     */
     public function admin()
     {
         return $this->cloudinary->adminApi();
     }
 
     /**
-    * Expose the Cloudinary Search Functionality
-    *
-    */
+     * Expose the Cloudinary Search Functionality
+     *
+     */
     public function search()
     {
         return $this->cloudinary->searchApi();
     }
 
     /**
-    * Expose the Cloudinary Upload Functionality
-    *
-    */
+     * Expose the Cloudinary Upload Functionality
+     *
+     */
     public function uploadApi()
     {
         return $this->cloudinary->uploadApi();
     }
 
     /**
-    * Uploads an asset to a Cloudinary account.
-    *
-    * The asset can be:
-    * * a local file path
-    * * the actual data (byte array buffer)
-    * * the Data URI (Base64 encoded), max ~60 MB (62,910,000 chars)
-    * * the remote FTP, HTTP or HTTPS URL address of an existing file
-    * * a private storage bucket (S3 or Google Storage) URL of a whitelisted bucket
-    *
-    * @param string $file    The asset to upload.
-    * @param array  $options The optional parameters. See the upload API documentation.
-    *
-    * @return ApiResponse
-    *
-    * @throws ApiError
-    *
-    * @see https://cloudinary.com/documentation/image_upload_api_reference#upload_method
-    */
+     * Uploads an asset to a Cloudinary account.
+     *
+     * The asset can be:
+     * * a local file path
+     * * the actual data (byte array buffer)
+     * * the Data URI (Base64 encoded), max ~60 MB (62,910,000 chars)
+     * * the remote FTP, HTTP or HTTPS URL address of an existing file
+     * * a private storage bucket (S3 or Google Storage) URL of a whitelisted bucket
+     *
+     * @param string $file    The asset to upload.
+     * @param array  $options The optional parameters. See the upload API documentation.
+     *
+     * @return ApiResponse
+     *
+     * @throws ApiError
+     *
+     * @see https://cloudinary.com/documentation/image_upload_api_reference#upload_method
+     */
     public function upload($file, $options = [])
     {
         $this->response = $this->uploadApi()->upload($file, $options);
@@ -136,37 +148,37 @@ class CloudinaryEngine
     }
 
     /**
-    * Uploads an asset to a Cloudinary account.
-    *
-    * The asset can be:
-    * * a local file path
-    * * the actual data (byte array buffer)
-    * * the Data URI (Base64 encoded), max ~60 MB (62,910,000 chars)
-    * * the remote FTP, HTTP or HTTPS URL address of an existing file
-    * * a private storage bucket (S3 or Google Storage) URL of a whitelisted bucket
-    *
-    *  This is asynchronous
-    */
+     * Uploads an asset to a Cloudinary account.
+     *
+     * The asset can be:
+     * * a local file path
+     * * the actual data (byte array buffer)
+     * * the Data URI (Base64 encoded), max ~60 MB (62,910,000 chars)
+     * * the remote FTP, HTTP or HTTPS URL address of an existing file
+     * * a private storage bucket (S3 or Google Storage) URL of a whitelisted bucket
+     *
+     *  This is asynchronous
+     */
     public function uploadAsync($file, $options = [])
     {
         return $this->uploadApi()->uploadAsync($file, $options);
     }
 
     /**
-    * Uploads an asset to a Cloudinary account.
-    *
-    * The upload is not signed so an upload preset is required.
-    *
-    * @param string $file         The asset to upload.
-    * @param string $uploadPreset The name of an upload preset.
-    * @param array  $options      The optional parameters. See the upload API documentation.
-    *
-    * @return ApiResponse
-    *
-    * @throws ApiError
-    *
-    * @see https://cloudinary.com/documentation/image_upload_api_reference#unsigned_upload_syntax
-    */
+     * Uploads an asset to a Cloudinary account.
+     *
+     * The upload is not signed so an upload preset is required.
+     *
+     * @param string $file         The asset to upload.
+     * @param string $uploadPreset The name of an upload preset.
+     * @param array  $options      The optional parameters. See the upload API documentation.
+     *
+     * @return ApiResponse  // [CN] function actually returns instance of CloudinaryEngine
+     *
+     * @throws ApiError
+     *
+     * @see https://cloudinary.com/documentation/image_upload_api_reference#unsigned_upload_syntax
+     */
     public function unsignedUpload($file, $uploadPreset, $options = [])
     {
         $this->response = $this->uploadApi()->unsignedUpload($file, $uploadPreset, $options);
@@ -175,20 +187,20 @@ class CloudinaryEngine
     }
 
     /**
-    * Uploads an asset to a Cloudinary account.
-    *
-    * The upload is not signed so an upload preset is required.
-    *
-    * This is asynchronous
-    */
+     * Uploads an asset to a Cloudinary account.
+     *
+     * The upload is not signed so an upload preset is required.
+     *
+     * This is asynchronous
+     */
     public function unsignedUploadAsync($file, $uploadPreset, $options = [])
     {
         return $this->uploadApi()->unsignedUploadAsync($file, $uploadPreset, $options);
     }
 
     /**
-    * Uploads an asset to a Cloudinary account, not limited to images, but any type of file.
-    */
+     * Uploads an asset to a Cloudinary account, not limited to images, but any type of file.
+     */
     public function uploadFile($file, $options = [])
     {
         $uploadOptions = array_merge($options, ['resource_type' => 'auto']);
@@ -218,27 +230,30 @@ class CloudinaryEngine
     }
 
     /**
-    * Get the name of the file after it has been uploaded to Cloudinary
-    * @return string
-    */
+     * Get the name of the file after it has been uploaded to Cloudinary
+     *
+     * @return string
+     */
     public function getFileName()
     {
         return $this->response[self::PUBLIC_ID];
     }
 
     /**
-    * Get the public id of the file (also known as the name of the file) after it has been uploaded to Cloudinary
-    * @return string
-    */
+     * Get the public id of the file (also known as the name of the file) after it has been uploaded to Cloudinary
+     *
+     * @return string
+     */
     public function getPublicId()
     {
         return $this->response[self::PUBLIC_ID];
     }
 
     /**
-    * Get the name of the file before it was uploaded to Cloudinary
-    * @return string
-    */
+     * Get the name of the file before it was uploaded to Cloudinary
+     *
+     * @return string
+     */
     public function getOriginalFileName()
     {
         return $this->response[self::ORIGINAL_FILENAME];
@@ -325,59 +340,68 @@ class CloudinaryEngine
     }
 
     /**
-    * Formats filesize in the way every human understands
-    *
-    * @param file $file
-    * @return string Formatted Filesize, e.g. "113.24 MB".
-    */
+     * Formats filesize in the way every human understands
+     *
+     * @param $sizeInBytes
+     *
+     * @return string Formatted Filesize, e.g. "113.24 MB".
+     */
     private function getHumanReadableSize($sizeInBytes)
     {
         if ($sizeInBytes >= 1073741824) {
-            return number_format($bytes / 1073741824, 2) . ' GB';
-        } elseif ($sizeInBytes >= 1048576) {
-            return number_format($bytes / 1048576, 2) . ' MB';
-        } elseif ($sizeInBytes >= 1024) {
-            return number_format($bytes / 1024, 2) . ' KB';
-        } elseif ($sizeInBytes > 1) {
-            return $sizeInBytes . ' bytes';
-        } elseif ($sizeInBytes == 1) {
-            return '1 byte';
-        } else {
-            return '0 bytes';
+            return number_format($sizeInBytes / 1073741824, 2) . ' GB';
         }
+
+        if ($sizeInBytes >= 1048576) {
+            return number_format($sizeInBytes / 1048576, 2) . ' MB';
+        }
+
+        if ($sizeInBytes >= 1024) {
+            return number_format($sizeInBytes / 1024, 2) . ' KB';
+        }
+
+        if ($sizeInBytes > 1) {
+            return $sizeInBytes . ' bytes';
+        }
+
+        if ($sizeInBytes === 1) {
+            return '1 byte';
+        }
+
+        return '0 bytes';
     }
 
     /**
-    * Fetches a new Image with current instance configuration.
-    *
-    * @param string $publicId The public ID of the image.
-    *
-    * @return Image
-    */
+     * Fetches a new Image with current instance configuration.
+     *
+     * @param string $publicId The public ID of the image.
+     *
+     * @return Image
+     */
     public function getImage($publicId)
     {
         return $this->cloudinary->image($publicId);
     }
 
     /**
-    * Fetches a new Video with current instance configuration.
-    *
-    * @param string|mixed $publicId The public ID of the video.
-    *
-    * @return Video
-    */
+     * Fetches a new Video with current instance configuration.
+     *
+     * @param string|mixed $publicId The public ID of the video.
+     *
+     * @return Video
+     */
     public function getVideo($publicId)
     {
         return $this->cloudinary->video($publicId);
     }
 
     /**
-    * Fetches a raw file with current instance configuration.
-    *
-    * @param string|mixed $publicId The public ID of the file.
-    *
-    * @return File
-    */
+     * Fetches a raw file with current instance configuration.
+     *
+     * @param string|mixed $publicId The public ID of the file.
+     *
+     * @return File
+     */
     public function getFile($publicId)
     {
         return $this->cloudinary->raw($publicId);
@@ -400,26 +424,26 @@ class CloudinaryEngine
     */
 
     /**
-    * Adds a tag to the assets specified.
-    *
-    * @param string $tag       The name of the tag to add.
-    * @param array  $publicIds The public IDs of the assets to add the tag to.
-    * @param array  $options   The optional parameters. See the upload API documentation.
-    *
-    * @return ApiResponse
-    *
-    * @see https://cloudinary.com/documentation/image_upload_api_reference#tags_method
-    */
+     * Adds a tag to the assets specified.
+     *
+     * @param string $tag       The name of the tag to add.
+     * @param array  $publicIds The public IDs of the assets to add the tag to.
+     * @param array  $options   The optional parameters. See the upload API documentation.
+     *
+     * @return ApiResponse
+     *
+     * @see https://cloudinary.com/documentation/image_upload_api_reference#tags_method
+     */
     public function addTag($tag, $publicIds = [], $options = [])
     {
         return $this->uploadApi()->addTag($tag, $publicIds, $options);
     }
 
     /**
-    * Adds a tag to the assets specified.
-    *
-    * This is an asynchronous function.
-    */
+     * Adds a tag to the assets specified.
+     *
+     * This is an asynchronous function.
+     */
     public function addTagAsync($tag, $publicIds = [], $options = [])
     {
         return $this->uploadApi()->addTagAsync($tag, $publicIds, $options);
@@ -453,15 +477,15 @@ class CloudinaryEngine
     }
 
     /**
-    * Removes all tags from the assets specified.
-    *
-    * @param array $publicIds The public IDs of the assets to remove all tags from.
-    * @param array $options   The optional parameters. See the upload API documentation.
-    *
-    * @return ApiResponse
-    *
-    * @see https://cloudinary.com/documentation/image_upload_api_reference#tags_method
-    */
+     * Removes all tags from the assets specified.
+     *
+     * @param array $publicIds The public IDs of the assets to remove all tags from.
+     * @param array $options   The optional parameters. See the upload API documentation.
+     *
+     * @return ApiResponse
+     *
+     * @see https://cloudinary.com/documentation/image_upload_api_reference#tags_method
+     */
     public function removeAllTags($publicIds = [], $options = [])
     {
         return $this->uploadApi()->removeAllTags($publicIds, $options);
@@ -479,27 +503,27 @@ class CloudinaryEngine
     }
 
     /**
-    * Replaces all existing tags on the assets specified with the tag specified.
-    *
-    * @param string       $tag       The new tag with which to replace the existing tags.
-    * @param array|string $publicIds The public IDs of the assets to replace the tags of.
-    * @param array        $options   The optional parameters. See the upload API documentation.
-    *
-    * @return ApiResponse
-    *
-    * @see https://cloudinary.com/documentation/image_upload_api_reference#tags_method
-    */
+     * Replaces all existing tags on the assets specified with the tag specified.
+     *
+     * @param string       $tag       The new tag with which to replace the existing tags.
+     * @param array|string $publicIds The public IDs of the assets to replace the tags of.
+     * @param array        $options   The optional parameters. See the upload API documentation.
+     *
+     * @return ApiResponse
+     *
+     * @see https://cloudinary.com/documentation/image_upload_api_reference#tags_method
+     */
     public function replaceTag($tag, $publicIds = [], $options = [])
     {
         return $this->uploadApi()->replaceTag($tag, $publicIds, $options);
     }
 
     /**
-    * Replaces all existing tags on the assets specified with the tag specified.
-    *
-    * This is an asynchronous function.
-    *
-    */
+     * Replaces all existing tags on the assets specified with the tag specified.
+     *
+     * This is an asynchronous function.
+     *
+     */
     public function replaceTagAsync($tag, $publicIds = [], $options = [])
     {
         return $this->uploadApi()->replaceTagAsync($tag, $publicIds, $options);
@@ -512,44 +536,44 @@ class CloudinaryEngine
     */
 
     /**
-    * Creates a sprite from all images that have been assigned a specified tag.
-    *
-    * The process produces two files:
-    * * A single image file containing all the images with the specified tag (PNG by default).
-    * * A CSS file that includes the style class names and the location of the individual images in the sprite.
-    *
-    * @param string $tag     The tag that indicates which images to include in the sprite.
-    * @param array  $options The optional parameters. See the upload API documentation.
-    *
-    * @return ApiResponse
-    *
-    * @see https://cloudinary.com/documentation/image_upload_api_reference#sprite_method
-    */
+     * Creates a sprite from all images that have been assigned a specified tag.
+     *
+     * The process produces two files:
+     * * A single image file containing all the images with the specified tag (PNG by default).
+     * * A CSS file that includes the style class names and the location of the individual images in the sprite.
+     *
+     * @param string $tag     The tag that indicates which images to include in the sprite.
+     * @param array  $options The optional parameters. See the upload API documentation.
+     *
+     * @return ApiResponse
+     *
+     * @see https://cloudinary.com/documentation/image_upload_api_reference#sprite_method
+     */
     public function generateSprite($tag, $options = [])
     {
         return $this->uploadApi()->generateSprite($tag, $options);
     }
 
     /**
-    * Creates a sprite from all images that have been assigned a specified tag.
-    *
-    * This is an asynchronous function.
-    */
+     * Creates a sprite from all images that have been assigned a specified tag.
+     *
+     * This is an asynchronous function.
+     */
     public function generateSpriteAsync($tag, $options = [])
     {
         return $this->uploadApi()->generateSpriteAsync($tag, $options);
     }
 
     /**
-    * Creates a PDF file from images in your media library that have been assigned a specific tag.
-    *
-    * Important note for free accounts:
-    * By default, while you can use this method to generate PDF files, free Cloudinary accounts are blocked from delivering
-    * files in PDF format for security reasons.
-    *For details or to request that this limitation be removed for your free account, see Media delivery.
-    *
-    * @see https://cloudinary.com/documentation/paged_and_layered_media#creating_pdf_files_from_images
-    */
+     * Creates a PDF file from images in your media library that have been assigned a specific tag.
+     *
+     * Important note for free accounts:
+     * By default, while you can use this method to generate PDF files, free Cloudinary accounts are blocked from
+     * delivering files in PDF format for security reasons.
+     *For details or to request that this limitation be removed for your free account, see Media delivery.
+     *
+     * @see https://cloudinary.com/documentation/paged_and_layered_media#creating_pdf_files_from_images
+     */
     public function generatePDF($tag, $options = [])
     {
         $pdfOptions = array_merge($options, ['async' => false, 'format' => 'pdf']);
@@ -648,15 +672,15 @@ class CloudinaryEngine
     }
 
     /**
-    * Dynamically generates an image from a given textual string.
-    *
-    * @param string $text    The text string to generate an image for.
-    * @param array  $options The optional parameters.  See the upload API documentation.
-    *
-    * @return ApiResponse
-    *
-    * @see https://cloudinary.com/documentation/image_upload_api_reference#text_method
-    */
+     * Dynamically generates an image from a given textual string.
+     *
+     * @param string $text    The text string to generate an image for.
+     * @param array  $options The optional parameters.  See the upload API documentation.
+     *
+     * @return ApiResponse
+     *
+     * @see https://cloudinary.com/documentation/image_upload_api_reference#text_method
+     */
     public function generateImageFromText($text, $options = [])
     {
         $this->response = $this->uploadApi()->text($text, $options);
@@ -741,26 +765,26 @@ class CloudinaryEngine
 
     public function destroyAsync($publicId, $options = [])
     {
-       return $this->uploadApi()->destroyAsync($publicId, $options);
+        return $this->uploadApi()->destroyAsync($publicId, $options);
     }
 
     public function rename($from, $to, $options = [])
     {
-       return $this->uploadApi()->rename($from, $to, $options);
+        return $this->uploadApi()->rename($from, $to, $options);
     }
 
     public function renameAsync($from, $to, $options = [])
     {
-       return $this->uploadApi()->renameAsync($from, $to, $options);
+        return $this->uploadApi()->renameAsync($from, $to, $options);
     }
 
     public function explicit($publicId, $options = [])
     {
-       return $this->uploadApi()->explicit($publicId, $options);
+        return $this->uploadApi()->explicit($publicId, $options);
     }
 
     public function explicitAsync($publicId, $options = [])
     {
-       return $this->uploadApi()->explicitAsync($publicId, $options);
+        return $this->uploadApi()->explicitAsync($publicId, $options);
     }
 }

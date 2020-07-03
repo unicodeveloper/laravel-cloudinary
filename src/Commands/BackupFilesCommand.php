@@ -6,6 +6,11 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
+/**
+ * Class BackupFilesCommand
+ *
+ * @package Unicodeveloper\Cloudinary\Commands
+ */
 class BackupFilesCommand extends Command
 {
     /**
@@ -27,21 +32,24 @@ class BackupFilesCommand extends Command
     /**
      * Execute the console command.
      *
+     * @param CloudinaryEngine $engine
+     *
      * @return void
      */
     public function handle(CloudinaryEngine $engine)
     {
-
         $files = $this->getFiles();
         $folder = null;
 
-        if(! $files) {
-            $this->warn('There are no files in the storage/app/public directory. Use --location flag to specify the name of the directory (if there are files in there) within the storage/app directory.');
+        if (! $files) {
+            $this->warn(
+                'There are no files in the storage/app/public directory. Use --location flag to specify the name of the directory (if there are files in there) within the storage/app directory.'
+            );
 
             return;
         }
 
-        if(! config('cloudinary.cloud_url')) {
+        if (! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -58,14 +66,13 @@ class BackupFilesCommand extends Command
         $this->info('Starting backup to Cloudinary...');
 
         try {
-
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 $engine->uploadFile($file->getRealPath(), $folder ? ['folder' => $folder] : []);
                 $this->info('Uploading in progress...');
             }
 
             $this->info('Backup to Cloudinary completed!');
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->warn("Backup of files to Cloudinary failed because: {$exception->getMessage()}.");
         }
     }

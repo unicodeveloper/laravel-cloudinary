@@ -5,7 +5,6 @@ namespace Unicodeveloper\Cloudinary;
 use Exception;
 use Unicodeveloper\Cloudinary\Model\Media;
 
-
 /**
  * MediaAlly
  *
@@ -31,16 +30,16 @@ trait MediaAlly
      */
     public function attachMedia($file)
     {
-        if(! file_exists($file)) {
+        if (! file_exists($file)) {
             throw new Exception('Please pass in a file that exists');
         }
 
         $response = resolve(CloudinaryEngine::class)->uploadFile($file->getRealPath());
 
-        $media = new Media();
+        $media            = new Media();
         $media->file_name = $response->getFileName();
-        $media->file_url = $response->getSecurePath();
-        $media->size = $response->getSize();
+        $media->file_url  = $response->getSecurePath();
+        $media->size      = $response->getSize();
         $media->file_type = $response->getFileType();
 
         $this->medially()->save($media);
@@ -53,40 +52,39 @@ trait MediaAlly
     {
         $response = resolve(CloudinaryEngine::class)->uploadFile($remoteFile);
 
-        $media = new Media();
+        $media            = new Media();
         $media->file_name = $response->getFileName();
-        $media->file_url = $response->getSecurePath();
-        $media->size = $response->getSize();
+        $media->file_url  = $response->getSecurePath();
+        $media->size      = $response->getSize();
         $media->file_type = $response->getFileType();
 
         $this->medially()->save($media);
     }
 
     /**
-    * Get all the Media files relating to a particular Model record
-    */
+     * Get all the Media files relating to a particular Model record
+     */
     public function fetchAllMedia()
     {
         return $this->medially()->get();
     }
 
     /**
-    * Get the first Media file relating to a particular Model record
-    */
+     * Get the first Media file relating to a particular Model record
+     */
     public function fetchFirstMedia()
     {
         return $this->medially()->first();
     }
 
     /**
-    * Delete all files associated with a particular Model record
-    */
+     * Delete all files associated with a particular Model record
+     */
     public function detachMedia()
     {
+        $items = $this->medially()->get();
 
-       $items = $this->medially()->get();
-
-        foreach($items as $item) {
+        foreach ($items as $item) {
             resolve(CloudinaryEngine::class)->destroy($item->getFileName());
         }
 
@@ -94,16 +92,18 @@ trait MediaAlly
     }
 
     /**
-    * Get the last Media file relating to a particular Model record
-    */
+     * Get the last Media file relating to a particular Model record
+     */
     public function fetchLastMedia()
     {
         return $this->medially()->get()->last();
     }
 
     /**
-    * Update the Media files relating to a particular Model record
-    */
+     * Update the Media files relating to a particular Model record
+     *
+     * @throws Exception
+     */
     public function updateMedia($file)
     {
         $this->detachMedia();
@@ -111,8 +111,10 @@ trait MediaAlly
     }
 
     /**
-    * Update the Media files relating to a particular Model record (Specificially existing remote files)
-    */
+     * Update the Media files relating to a particular Model record (Specificially existing remote files)
+     *
+     * @param $file
+     */
     public function updateRemoteMedia($file)
     {
         $this->detachMedia();
