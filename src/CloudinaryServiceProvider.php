@@ -126,7 +126,6 @@ class CloudinaryServiceProvider extends ServiceProvider
                     FetchFilesCommand::class,
                     RenameFilesCommand::class,
                     GenerateArchiveCommand::class,
-                    GenerateZipCommand::class,
                     DeleteFilesCommand::class
                 ]
             );
