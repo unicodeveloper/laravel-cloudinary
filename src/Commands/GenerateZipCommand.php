@@ -55,7 +55,7 @@ class GenerateZipCommand extends Command
         $this->info('Extracting remote file...');
 
         try {
-            $engine->uploadFiles($remoteUrl);
+            $engine->uploadFile($remoteUrl);
             $this->info('Uploading in progress...');
 
             $this->info('Upload to Cloudinary completed!');
