@@ -2,6 +2,7 @@
 
 namespace Unicodeveloper\Cloudinary\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
@@ -16,7 +17,9 @@ class GenerateArchiveCommand extends Command
      *
      * @var string
      */
-    protected $signature = "cloudinary:archive {remote-url}";
+    protected $signature = "cloudinary:archive
+        {--tags=* : The tags of the assets you want included in the arhive}
+        {--public_ids=* : The public IDs of the assets you want included in the archive}";
 
     /**
      * The console command description.
@@ -38,27 +41,25 @@ class GenerateArchiveCommand extends Command
             return;
         }
 
-        if (is_numeric($this->argument('remote-url'))) {
-            $this->warn('This is a number, not a valid remote file url. Please try again with a valid URL.');
+        if (!$this->option('tags') && !$this->option('public_ids')) {
+            $this->warn(
+                'Please ensure you pass in at least a tag with --tags, or at least a public_id  with --public_ids'
+            );
 
             return;
         }
 
-        if (!filter_var($this->argument('remote-url'), FILTER_VALIDATE_URL)) {
-            $this->warn('Please add a valid remote file url as an argument.');
-
-            return;
-        }
-
-        $remoteUrl = $this->argument('remote-url');
-
-        $this->info('Extracting remote file...');
+        $this->info('Generating Archive...');
 
         try {
-            $engine->uploadFile($remoteUrl);
-            $this->info('Uploading in progress...');
+            $response = $engine->createArchive(
+                [
+                    'tags' => $this->option('tags') ?? null,
+                    'public_ids' => $this->option('public_ids') ?? null
+                ]
+            )['secure_url'];
 
-            $this->info('Upload to Cloudinary completed!');
+            $this->info("Archive: {$response}");
         } catch (Exception $exception) {
             $this->warn("Backup of files to Cloudinary failed because: {$exception->getMessage()}.");
         }

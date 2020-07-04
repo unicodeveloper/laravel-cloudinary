@@ -2,8 +2,8 @@
 
 namespace Unicodeveloper\Cloudinary\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
 /**
@@ -33,7 +33,7 @@ class RenameFilesCommand extends Command
      */
     public function handle(CloudinaryEngine $engine)
     {
-        if(! config('cloudinary.cloud_url')) {
+        if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -42,16 +42,15 @@ class RenameFilesCommand extends Command
         $fromPublicId = $this->argument('fromPublicId');
         $toPublicId = $this->argument('toPublicId');
 
-        if (! is_string($fromPublicId) || ! is_string($toPublicId)) {
-           $this->warn("Please ensure a valid public Id is passed as an argument.");
+        if (!is_string($fromPublicId) || !is_string($toPublicId)) {
+            $this->warn("Please ensure a valid public Id is passed as an argument.");
 
-           return;
+            return;
         }
 
         $this->info("About to rename {$fromPublicId} file to {$toPublicId} on Cloudinary...");
 
         try {
-
             $engine->rename($fromPublicId, $toPublicId);
 
             $this->info('File renamed successfully on Cloudinary!');

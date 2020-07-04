@@ -68,9 +68,9 @@ class CloudinaryAdapter implements AdapterInterface
     /**
      * Write a new file using a stream.
      *
-     * @param string $path
-     * @param resource $resource
-     * @param Config $options Config object
+     * @param string    $path
+     * @param resource  $resource
+     * @param Config    $options Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -82,10 +82,10 @@ class CloudinaryAdapter implements AdapterInterface
 
         $fileExtension = pathinfo($publicId, PATHINFO_EXTENSION);
 
-        $newPublicId = $fileExtension ? substr($publicId, 0, -(strlen($fileExtension) + 1)) : $publicId;
+        $newPublicId = $fileExtension ? substr($publicId, 0, - (strlen($fileExtension) + 1)) : $publicId;
 
         $uploadOptions = [
-            'public_id' => $newPublicId,
+            'public_id'     => $newPublicId,
             'resource_type' => $resourceType
         ];
 
@@ -100,9 +100,9 @@ class CloudinaryAdapter implements AdapterInterface
      * Update a file using a stream.
      * Cloudinary has no specific update method. Overwrite instead.
      *
-     * @param string $path
-     * @param resource $resource
-     * @param Config $options Config object
+     * @param string    $path
+     * @param resource  $resource
+     * @param Config    $options Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -123,7 +123,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function rename($path, $newpath)
     {
-        $pathInfo = pathinfo($path);
+        $pathInfo    = pathinfo($path);
         $newPathInfo = pathinfo($newpath);
 
         $remotePath = ($pathInfo['dirname'] != '.') ? pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
@@ -181,6 +181,8 @@ class CloudinaryAdapter implements AdapterInterface
      * @param string $dirname
      *
      * @return bool
+     *
+     * @throws ApiError
      */
     public function deleteDir($dirname)
     {
@@ -205,6 +207,8 @@ class CloudinaryAdapter implements AdapterInterface
      * @param Config $options
      *
      * @return bool
+     *
+     * @throws ApiError
      */
     public function createDir($dirname, Config $options)
     {
@@ -251,7 +255,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         $resource = (array)$this->adminApi()->resource($path);
 
-        $stream = fopen($resource['secure_url'], 'r');
+        $stream = fopen($resource['secure_url'], 'rb');
 
         return compact('stream', 'path');
     }
@@ -260,7 +264,7 @@ class CloudinaryAdapter implements AdapterInterface
      * List contents of a directory.
      *
      * @param string $directory
-     * @param bool $recursive
+     * @param bool $hasR          ecursive
      *
      * @return array
      */
@@ -298,15 +302,17 @@ class CloudinaryAdapter implements AdapterInterface
     {
         $resource['type'] = 'file';
         $resource['path'] = $resource['public_id'];
-        $resource = array_merge($resource, $this->prepareSize($resource));
-        $resource = array_merge($resource, $this->prepareTimestamp($resource));
-        $resource = array_merge($resource, $this->prepareMimetype($resource));
+        $resource         = array_merge($resource, $this->prepareSize($resource));
+        $resource         = array_merge($resource, $this->prepareTimestamp($resource));
+        $resource         = array_merge($resource, $this->prepareMimetype($resource));
         return $resource;
     }
 
     /**
      * prepare size response
+     *
      * @param array $resource
+     *
      * @return array
      */
     protected function prepareSize($resource)
@@ -316,8 +322,10 @@ class CloudinaryAdapter implements AdapterInterface
     }
 
     /**
-     * prepare timestpamp response
+     * prepare timestamp response
+     *
      * @param array $resource
+     *
      * @return array
      */
     protected function prepareTimestamp($resource)
@@ -328,7 +336,9 @@ class CloudinaryAdapter implements AdapterInterface
 
     /**
      * prepare mimetype response
+     *
      * @param array $resource
+     *
      * @return array
      */
     protected function prepareMimetype($resource)

@@ -2,6 +2,7 @@
 
 namespace Unicodeveloper\Cloudinary\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
