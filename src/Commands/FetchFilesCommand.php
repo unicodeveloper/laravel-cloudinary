@@ -3,9 +3,12 @@
 namespace Unicodeveloper\Cloudinary\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
+/**
+ * Class FetchFilesCommand
+ * @package Unicodeveloper\Cloudinary\Commands
+ */
 class FetchFilesCommand extends Command
 {
     /**
@@ -29,8 +32,7 @@ class FetchFilesCommand extends Command
      */
     public function handle(CloudinaryEngine $engine)
     {
-
-        if(! config('cloudinary.cloud_url')) {
+        if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -38,16 +40,15 @@ class FetchFilesCommand extends Command
 
         $publicId = $this->argument('publicId');
 
-        if (! is_string($publicId)) {
-           $this->warn("Please ensure a valid public Id is passed as an argument.");
+        if (!is_string($publicId)) {
+            $this->warn("Please ensure a valid public Id is passed as an argument.");
 
-           return;
+            return;
         }
 
         $this->info("Fetching file...");
 
         try {
-
             $url = $engine->getImage($publicId)->toUrl();
             $this->info("File: {$url}");
         } catch (Exception $exception) {

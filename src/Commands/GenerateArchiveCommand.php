@@ -3,9 +3,12 @@
 namespace Unicodeveloper\Cloudinary\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
+/**
+ * Class GenerateArchiveCommand
+ * @package Unicodeveloper\Cloudinary\Commands
+ */
 class GenerateArchiveCommand extends Command
 {
     /**
@@ -29,20 +32,19 @@ class GenerateArchiveCommand extends Command
      */
     public function handle(CloudinaryEngine $engine)
     {
-
-        if(! config('cloudinary.cloud_url')) {
+        if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
         }
 
-        if(is_numeric($this->argument('remote-url'))) {
+        if (is_numeric($this->argument('remote-url'))) {
             $this->warn('This is a number, not a valid remote file url. Please try again with a valid URL.');
 
             return;
         }
 
-        if(! filter_var($this->argument('remote-url'), FILTER_VALIDATE_URL)) {
+        if (!filter_var($this->argument('remote-url'), FILTER_VALIDATE_URL)) {
             $this->warn('Please add a valid remote file url as an argument.');
 
             return;
@@ -53,7 +55,6 @@ class GenerateArchiveCommand extends Command
         $this->info('Extracting remote file...');
 
         try {
-
             $engine->uploadFiles($remoteUrl);
             $this->info('Uploading in progress...');
 

@@ -6,6 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
+/**
+ * Class RenameFilesCommand
+ * @package Unicodeveloper\Cloudinary\Commands
+ */
 class RenameFilesCommand extends Command
 {
     /**

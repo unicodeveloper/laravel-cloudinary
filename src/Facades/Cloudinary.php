@@ -5,6 +5,10 @@ namespace Unicodeveloper\Cloudinary\Facades;
 use Illuminate\Support\Facades\Facade;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
+/**
+ * Class Cloudinary
+ * @package Unicodeveloper\Cloudinary\Facades
+ */
 class Cloudinary extends Facade
 {
     /**

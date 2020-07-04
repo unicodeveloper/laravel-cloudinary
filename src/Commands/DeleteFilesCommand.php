@@ -3,9 +3,12 @@
 namespace Unicodeveloper\Cloudinary\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Unicodeveloper\Cloudinary\CloudinaryEngine;
 
+/**
+ * Class DeleteFilesCommand
+ * @package Unicodeveloper\Cloudinary\Commands
+ */
 class DeleteFilesCommand extends Command
 {
     /**
@@ -29,7 +32,7 @@ class DeleteFilesCommand extends Command
      */
     public function handle(CloudinaryEngine $engine)
     {
-        if(! config('cloudinary.cloud_url')) {
+        if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -40,7 +43,6 @@ class DeleteFilesCommand extends Command
         $this->info("About to delete {$publicId} file on Cloudinary...");
 
         try {
-
             $engine->destroy($publicId);
 
             $this->info('File deleted!');
