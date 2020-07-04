@@ -11,7 +11,6 @@ use Unicodeveloper\Cloudinary\Commands\BackupFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\DeleteFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\FetchFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\GenerateArchiveCommand;
-use Unicodeveloper\Cloudinary\Commands\GenerateZipCommand;
 use Unicodeveloper\Cloudinary\Commands\RenameFilesCommand;
 use Unicodeveloper\Cloudinary\Commands\UploadFileCommand;
 
@@ -140,7 +139,6 @@ class CloudinaryServiceProvider extends ServiceProvider
     protected function bootPublishing()
     {
         if ($this->app->runningInConsole()) {
-            //$config = realpath(__DIR__ . '/../config/cloudinary.php');
             $config = dirname(__DIR__) . '/config/cloudinary.php';
 
             $this->publishes(
