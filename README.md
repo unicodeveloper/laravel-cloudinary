@@ -116,10 +116,22 @@ $page = Page::create($this->request->input());
 $page->attachMedia($file);   // Example of $file is $request->file('file');
 
 /**
+ *  How to attach an existing remote file to a Model by model creation
+ */
+$page = Page::create($this->request->input());
+$page->attachMedia($remoteFileUrl);   // Example of $remoteFileUrl is https://miro.medium.com/max/4096/1*V1TmCz1GeAQ4T7EWRTWebA.jpeg
+
+/**
  *  How to attach a file to a Model by retreiving model records
  */
 $page = Page::find(2);
 $page->attachMedia($file);  // Example of $file is $request->file('file');
+
+/**
+ *  How to attach a remote file to a Model by retreiving model records
+ */
+$page = Page::find(2);
+$page->attachRemoteMedia($remoteFileUrl);  // Example of $remoteFileUrl is https://miro.medium.com/max/4096/1*V1TmCz1GeAQ4T7EWRTWebA.jpeg
 
 /**
  *  How to retrieve files that were attached to a Model
