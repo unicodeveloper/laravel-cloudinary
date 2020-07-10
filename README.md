@@ -51,10 +51,15 @@ $uploadedFileUrl = cloudinary()->uploadVideo($request->file('file')->getRealPath
 // Upload any File to Cloudinary with One line of Code
 $uploadedFileUrl = cloudinary()->uploadFile($request->file('file')->getRealPath())->getSecurePath();
 
+
+
 /**
  *  You can also skip the Cloudinary Facade or helper method and laravel-ize your uploads by simply calling the
  *  storeOnCloudinary() method on the file itself
  */
+
+// Store the uploaded file in the "lambogini" directory on Cloudinary
+$result = $request->file('image')->store('lambogini', 'cloudinary');
 
 // Store the uploaded file on Cloudinary
 $result = $request->file('file')->storeOnCloudinary();
@@ -67,6 +72,7 @@ $result = $request->file->storeOnCloudinary('lambogini');
 
 // Store the uploaded file in the "lambogini" directory on Cloudinary with the filename "prosper"
 $result = $request->file->storeOnCloudinaryAs('lambogini', 'prosper');
+
 
 $result->getPath(); // Get the url of the uploaded file; http
 $result->getSecurePath(); // Get the url of the uploaded file; https
