@@ -216,7 +216,7 @@ php artisan cloudinary:rename
 php artisan cloudinary:upload
 
 /**
- * Archive a group files and get the zipped downloadable url
+ * Generate an archive of a group of files and get the zipped downloadable url
  */
 php artisan cloudinary:archive
 ```
