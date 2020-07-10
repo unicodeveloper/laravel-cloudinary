@@ -84,6 +84,28 @@ $result->getTimeUploaded(); // Get the time the file was uploaded
 
 **Attach Files** to Laravel **Eloquent Models**:
 
+First, import the `Unicodeveloper\Cloudinary\MediaAlly` trait into the Model like so:
+
+```php
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Unicodeveloper\Cloudinary\MediaAlly;
+
+class Page extends Model
+{
+    use MediaAlly;
+
+    ...
+}
+```
+
+Next, ensure you already published the migration files that ships with this package via `php artisan migrate`.
+
+You can now attach media assets to your model like so:
+
 ```php
 /**
  *  How to attach a file to a Model by model creation

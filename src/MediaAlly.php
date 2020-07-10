@@ -47,7 +47,7 @@ trait MediaAlly
     }
 
     /**
-     * Attach Rwmote Media Files to a Model
+     * Attach Remote Media Files to a Model
      */
     public function attachRemoteMedia($remoteFile)
     {
