@@ -82,7 +82,7 @@ $result->getHeight(); // Get the height of the uploaded file
 $result->getTimeUploaded(); // Get the time the file was uploaded
 ```
 
-**Attach Files** to Laravel **Eloquent Models**:
+**Attach Files to Laravel Eloquent Models**:
 
 First, import the `Unicodeveloper\Cloudinary\MediaAlly` trait into your Model like so:
 
@@ -214,6 +214,11 @@ php artisan cloudinary:rename
  * Upload a File to Cloudinary
  */
 php artisan cloudinary:upload
+
+/**
+ * Archive a group files and get the zipped downloadable url
+ */
+php artisan cloudinary:archive
 ```
 
 
