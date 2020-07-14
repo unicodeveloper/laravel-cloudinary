@@ -131,7 +131,8 @@ class CloudinaryServiceProvider extends ServiceProvider
             $this->publishes(
                 [
                     $config => $this->app->configPath('cloudinary.php'),
-                ]
+                ],
+                'laravel-cloudinary-config'
             );
 
             $this->publishes(
