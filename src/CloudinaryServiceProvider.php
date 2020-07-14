@@ -139,7 +139,7 @@ class CloudinaryServiceProvider extends ServiceProvider
                 [
                     __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
                 ],
-                'laravel-cloudinary-migrations'
+                'laravel-cloudinary-migration'
             );
         }
     }
