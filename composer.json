@@ -14,7 +14,7 @@
     "require": {
         "php": "^7.0",
         "illuminate/support": "~5|~6|~7",
-        "cloudinary/cloudinary_php": "2.0.0-beta5",
+        "cloudinary/cloudinary_php": "2.0.0-beta6",
         "ext-json": "*"
     },
     "require-dev": {
