@@ -108,9 +108,13 @@ class Page extends Model
 }
 ```
 
-Next, ensure you already published the media migration files that ships with this package via `php artisan migrate`.
+Next, publish the package's migration file using this command:
 
-**Note:** Once this package has been installed, your app automatically picks up the migration files and creates the required tables in your DB the next time you run `php artisan migrate`.
+```bash
+php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider" --tag="laravel-cloudinary-migration"
+```
+
+**Note:** Once this has been published, run `php artisan migrate` to create the required table in your DB.
 
 You can now attach media assets to your model like so:
 
@@ -274,7 +278,7 @@ Also, register the Cloudinary Facade like so:
 You can publish the configuration file using this command:
 
 ```bash
-php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider"
+php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider" --tag="laravel-cloudinary-config"
 ```
 
 A configuration-file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
