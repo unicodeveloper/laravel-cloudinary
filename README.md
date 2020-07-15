@@ -1,9 +1,9 @@
 <div align="center">
-    <h1> Laravel Cloudinary (DEPRECATED, NO LONGER MAINTAINED) </h1>
+    <h1> Laravel Cloudinary (DEPRECATED) </h1>
+</div>
 
-    <hr/>
-
-    <h2> USE [CLOUDINARY LARAVEL PACKAGE](https://github.com/cloudinary-labs/cloudinary-laravel) </h2>
+<div>
+    <h2> PLEASE USE [CLOUDINARY LARAVEL PACKAGE](https://github.com/cloudinary-labs/cloudinary-laravel) </h2>
 </div>
 
 <p align="center">
