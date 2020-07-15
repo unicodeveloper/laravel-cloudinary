@@ -3,7 +3,7 @@
 </div>
 
 <div>
-    <h2> PLEASE USE [CLOUDINARY LARAVEL PACKAGE](https://github.com/cloudinary-labs/cloudinary-laravel) </h2>
+    <h2> Please use <a href="https://github.com/cloudinary-labs/cloudinary-laravel"> Cloudinary Laravel Package Now!</h2>
 </div>
 
 <p align="center">
